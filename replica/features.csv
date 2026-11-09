@@ -1,0 +1,14 @@
+feature,area,priority,original,clone,notes
+Input and sanitization of exam server URL,input,must,yes,yes,Auto prepends http/https and supports local LAN IPs
+QR Code camera scanner,input,must,yes,yes,Fast barcode scan via ZXing embedded
+Fullscreen immersive kiosk lock,security,must,yes,yes,startLockTask and WindowInsetsControllerCompat
+FLAG_SECURE screenshot and recording block,security,must,yes,yes,Prevents screen capture on window level
+Proctor PIN unlock to exit exam,security,must,yes,yes,Dialog with encrypted SharedPreferences PIN
+Local LAN IP and Google Form support,webview,must,yes,yes,Support 192.168.x.x and docs.google.com
+Mixed content mode for school LAN HTTP servers,webview,must,yes,yes,MIXED_CONTENT_ALWAYS_ALLOW
+Resilient non-destructive network error handling,webview,must,no,yes,Solves major original bug: preserves student input
+Anti-cheat copy/paste and contextmenu block,security,must,yes,yes,Injected CSS and JavaScript
+5-second Grace Period overlay,anti-cheat,should,no,yes,Solves major original bug: zero false positives
+Recent exam URLs quick access chips,navigation,should,no,yes,Saves up to 5 recently accessed exam URLs
+Customizable teacher proctor PIN,settings,should,no,yes,Configurable from settings dialog (default 1234)
+Direct automated APK build via GitHub Actions CI,devops,could,no,yes,Single-push cloud APK compilation

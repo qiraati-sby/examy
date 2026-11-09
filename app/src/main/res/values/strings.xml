@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Examy</string>
+    <string name="app_tagline">Secure &amp; Resilient Exam Browser</string>
+
+    <!-- Home Screen -->
+    <string name="hint_exam_url">Masukkan URL ujian (cth: 192.168.1.100 atau Google Form)</string>
+    <string name="btn_start_exam">Mulai Ujian</string>
+    <string name="btn_scan_qr">Pindai QR Code</string>
+    <string name="section_quick_access">Akses Cepat / Riwayat Ujian</string>
+    <string name="btn_clear_history">Hapus</string>
+    <string name="title_settings">Pengaturan Pengawas</string>
+    <string name="desc_settings">Atur PIN keluar dan konfigurasi proteksi ujian</string>
+
+    <!-- Exam Screen -->
+    <string name="proctor_exit_hint">Pengawas: Ketuk ikon kunci untuk membuka dialog keluar</string>
+    <string name="dialog_exit_title">Konfirmasi Keluar Ujian</string>
+    <string name="dialog_exit_desc">Masukkan PIN Pengawas / Proktor untuk mengakhiri sesi ujian:</string>
+    <string name="hint_pin">PIN Pengawas (4-6 angka)</string>
+    <string name="btn_unlock">Buka Kunci</string>
+    <string name="btn_cancel">Batal</string>
+    <string name="err_wrong_pin">PIN salah! Hubungi pengawas ruangan.</string>
+    <string name="err_empty_pin">Harap masukkan PIN pengawas.</string>
+
+    <!-- Network & Security Alerts -->
+    <string name="alert_offline_title">Koneksi Terputus</string>
+    <string name="alert_offline_desc">Jawaban Anda aman. Sedang mencoba menghubungkan kembali ke server ujian...</string>
+    <string name="btn_retry_connection">Coba Lagi</string>
+
+    <!-- Grace Period / Anti-Cheat -->
+    <string name="alert_grace_title">Peringatan Keamanan!</string>
+    <string name="alert_grace_desc">Jangan beralih aplikasi atau membuka notifikasi. Kembali ke layar ujian dalam %d detik atau sesi akan dikunci!</string>
+
+    <!-- Teacher Settings -->
+    <string name="setting_change_pin">Ubah PIN Pengawas</string>
+    <string name="setting_new_pin_hint">PIN Baru (default: 1234)</string>
+    <string name="btn_save">Simpan</string>
+    <string name="toast_pin_saved">PIN pengawas berhasil disimpan.</string>
+    <string name="toast_invalid_url">Format URL tidak valid. Masukkan alamat URL atau IP yang benar.</string>
+</resources>

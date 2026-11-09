@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_card"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/title_settings"
+        android:textColor="@color/text_primary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/desc_settings"
+        android:textColor="@color/text_secondary"
+        android:textSize="13sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:text="@string/setting_change_pin"
+        android:textColor="@color/text_primary"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etNewPin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_input_field"
+        android:gravity="center"
+        android:hint="@string/setting_new_pin_hint"
+        android:importantForAutofill="no"
+        android:inputType="numberPassword"
+        android:letterSpacing="0.2"
+        android:maxLength="8"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_muted"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnCancelSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_marginEnd="8dp"
+            android:background="@android:color/transparent"
+            android:text="@string/btn_cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/text_secondary" />
+
+        <Button
+            android:id="@+id/btnSaveSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_primary_button"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/btn_save"
+            android:textAllCaps="false"
+            android:textColor="@color/text_on_primary"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

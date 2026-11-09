@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootExamLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface">
+
+    <!-- The Fullscreen Secure WebView -->
+    <WebView
+        android:id="@+id/examWebView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Thin Web Page Loading Indicator -->
+    <ProgressBar
+        android:id="@+id/loadingProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_gravity="top"
+        android:indeterminate="false"
+        android:max="100"
+        android:progressDrawable="@drawable/bg_primary_button"
+        android:visibility="gone"
+        tools:progress="60"
+        tools:visibility="visible" />
+
+    <!-- Floating Proctor Exit Button (Discreet, semi-transparent top-right corner) -->
+    <FrameLayout
+        android:id="@+id/btnProctorUnlock"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:alpha="0.3"
+        android:background="@drawable/bg_card"
+        android:clickable="true"
+        android:elevation="6dp"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/dialog_exit_title"
+            android:src="@drawable/ic_lock" />
+    </FrameLayout>
+
+    <!-- Non-destructive Offline Alert Banner (Does NOT wipe form input!) -->
+    <LinearLayout
+        android:id="@+id/bannerOffline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_card"
+        android:elevation="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="14dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="Offline"
+            android:src="@drawable/ic_warning" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/alert_offline_title"
+                android:textColor="@color/danger"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/alert_offline_desc"
+                android:textColor="@color/text_secondary"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnRetryOffline"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/bg_secondary_button"
+            android:contentDescription="@string/btn_retry_connection"
+            android:padding="6dp"
+            android:src="@drawable/ic_refresh" />
+    </LinearLayout>
+
+    <!-- Grace Period Countdown Overlay (Zero False Positives: Gives student 5s to return) -->
+    <LinearLayout
+        android:id="@+id/overlayGracePeriod"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/overlay_dim"
+        android:clickable="true"
+        android:elevation="20dp"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="32dp"
+        android:visibility="gone"
+        tools:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <ImageView
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="Warning"
+                android:src="@drawable/ic_warning" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/alert_grace_title"
+                android:textColor="@color/danger"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvGraceCountdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Kembali ke ujian dalam 5 detik!"
+                android:textAlignment="center"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btnResumeExam"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_primary_button"
+                android:text="Lanjutkan Ujian Sekarang"
+                android:textAllCaps="false"
+                android:textColor="@color/text_on_primary"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

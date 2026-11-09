@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand Primary -->
+    <color name="primary">#4F46E5</color>
+    <color name="primary_dark">#3730A3</color>
+    <color name="primary_light">#EEF2FF</color>
+    <color name="primary_container">#E0E7FF</color>
+
+    <!-- Accent & Status -->
+    <color name="accent">#06B6D4</color>
+    <color name="success">#10B981</color>
+    <color name="warning">#F59E0B</color>
+    <color name="danger">#EF4444</color>
+
+    <!-- Backgrounds & Surfaces -->
+    <color name="background">#F8FAFC</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#F1F5F9</color>
+    <color name="border">#E2E8F0</color>
+
+    <!-- Typography -->
+    <color name="text_primary">#0F172A</color>
+    <color name="text_secondary">#475569</color>
+    <color name="text_muted">#94A3B8</color>
+    <color name="text_on_primary">#FFFFFF</color>
+
+    <!-- Overlay & Scrim -->
+    <color name="overlay_dim">#CC000000</color>
+    <color name="grace_warning_bg">#FEF2F2</color>
+</resources>
