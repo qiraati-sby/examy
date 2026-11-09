@@ -1,5 +1,12 @@
 # Examy - Secure & Resilient Exam Browser
 
+[![Download APK](https://img.shields.io/badge/Download-Examy.apk-047857?style=for-the-badge&logo=android&logoColor=white)](https://github.com/qiraati-sby/examy/releases/download/v1.0.0/Examy.apk)
+
+📥 **[Unduh File Examy.apk (Rilis Terbaru Langsung)](https://github.com/qiraati-sby/examy/releases/download/v1.0.0/Examy.apk)**  
+🌐 **[Halaman Rilis Publik](https://github.com/qiraati-sby/examy/releases/latest)**
+
+---
+
 **Examy** adalah aplikasi Android Exam Browser (Exambro / Kiosk Browser) yang dirancang khusus untuk memfasilitasi ujian online dan Computer Based Test (CBT) berbasis LAN maupun Google Form secara aman, ringan, dan bebas dari kendala umum aplikasi pengunci ujian konvensional.
 
 ---
