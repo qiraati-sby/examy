@@ -1,13 +1,14 @@
 # Examy - Secure & Resilient Exam Browser
 
-[![Download APK](https://img.shields.io/badge/Download-Examy.apk-047857?style=for-the-badge&logo=android&logoColor=white)](https://github.com/qiraati-sby/examy/releases/download/v1.0.0/Examy.apk)
+[![Download APK](https://img.shields.io/badge/Download-Examy.apk-047857?style=for-the-badge&logo=android&logoColor=white)](https://github.com/qiraati-sby/examy/releases/download/v1.0.1/Examy.apk)
+[![Release Version](https://img.shields.io/github/v/release/qiraati-sby/examy?style=for-the-badge&color=blue)](https://github.com/qiraati-sby/examy/releases/latest)
 
-📥 **[Unduh File Examy.apk (Rilis Terbaru Langsung)](https://github.com/qiraati-sby/examy/releases/download/v1.0.0/Examy.apk)**  
-🌐 **[Halaman Rilis Publik](https://github.com/qiraati-sby/examy/releases/latest)**
+ðŸ“¥ **[Unduh File Examy.apk Langsung (Versi 2 - Menu Guru)](https://github.com/qiraati-sby/examy/releases/download/v1.0.1/Examy.apk)**  
+ðŸŒ **[Halaman Rilis Publik](https://github.com/qiraati-sby/examy/releases/latest)**
 
 ---
 
-**Examy** adalah aplikasi Android Exam Browser (Exambro / Kiosk Browser) yang dirancang khusus untuk memfasilitasi ujian online dan Computer Based Test (CBT) berbasis LAN maupun Google Form secara aman, ringan, dan bebas dari kendala umum aplikasi pengunci ujian konvensional.
+**Examy** adalah aplikasi Android Exam Browser (Exambro / Kiosk Browser) yang dirancang khusus untuk memfasilitasi ujian online dan Computer Based Test (CBT) berbasis LAN maupun Google Form secara aman, stabil, dan bebas dari kendala umum aplikasi pengunci ujian konvensional.
 
 ---
 
@@ -31,7 +32,7 @@
 
 ### A. Untuk Guru / Pengawas (Membuat Ujian)
 1. Buka aplikasi Examy di HP Anda.
-2. Ketuk menu **"Menu Guru: Buat Sesi Ujian"**.
+2. Ketuk tombol **"Menu Guru: Buat Sesi Ujian"**.
 3. Isi konfigurasi ujian:
    - **Nama Mata Pelajaran** (Cth: *Matematika Wajib - Kelas XII*)
    - **Link Ujian / Google Form** (Tersedia tombol pintas *Gunakan Contoh Link Google Form*)
@@ -44,7 +45,7 @@
 5. Sistem akan membuat QR Code dan kode token ujian yang dapat disalin atau dibagikan ke siswa atau proyektor ruangan!
 
 ### B. Untuk Siswa (Mengerjakan Ujian)
-1. Siswa memastikan volume HP minimal **80%**. Jika kurang dari 80%, aplikasi menampilkan dialog peringatan dan tidak mengizinkan ujian dimulai.
+1. Siswa memastikan volume HP minimal **80%**. Jika kurang dari 80%, aplikasi menampilkan dialog peringatan dan mewajibkan volume dinaikkan.
 2. Siswa memindai QR Code pengawas atau menempelkan Token / URL ujian.
 3. Aplikasi menampilkan ringkasan ujian (Nama mapel, durasi, status volume) dan meminta **PIN Siswa**.
 4. Masukkan PIN Siswa dan ketuk **Mulai Ujian**. Layar akan terkunci penuh (*fullscreen kiosk mode*).
@@ -66,44 +67,33 @@
 
 ```
 Examy/
-├── .github/
-│   └── workflows/
-│       └── build-apk.yml            # Otomasi kompilasi APK di cloud (GitHub Actions)
-├── app/
-│   ├── build.gradle.kts             # Dependensi & konfigurasi modul Android
-│   ├── src/main/
-│   │   ├── AndroidManifest.xml      # Izin kamera, audio settings, vibrator, kiosk
-│   │   ├── java/com/examy/app/
-│   │   │   ├── MainActivity.kt      # Halaman utama, validasi volume 80%, QR scan, token input
-│   │   │   ├── CreateExamActivity.kt# Menu guru konfigurasi ujian & generator token/QR
-│   │   │   ├── ExamActivity.kt      # Layar ujian terkunci, hitung mundur, alarm sirene, PIN keluar
-│   │   │   ├── ExamConfig.kt        # Model data konfigurasi ujian & enkoder token Base64
-│   │   │   ├── VolumeManager.kt     # Pengawas volume perangkat (wajib minimal 80%)
-│   │   │   ├── AlarmSoundManager.kt # Pengelola bunyi sirene alarm keras & getar berkelanjutan
-│   │   │   ├── ExamWebViewClient.kt # Whitelist domain, anti-copy script, resilient error handler
-│   │   │   └── SecurityManager.kt   # Logika Kiosk, FLAG_SECURE, & verifikasi 3-lapis PIN
-│   │   └── res/                     # Layout, dialog, icon, warna, & string multibahasa
-├── replica/                         # Catatan audit Clean-Room & matriks fitur lengkap
-└── README.md
+â”œâ”€â”€ .github/
+â”‚   â””â”€â”€ workflows/
+â”‚       â””â”€â”€ build-apk.yml            # Otomasi kompilasi APK & publikasi rilis di cloud (GitHub Actions)
+â”œâ”€â”€ app/
+â”‚   â”œâ”€â”€ build.gradle.kts             # Dependensi & konfigurasi modul Android
+â”‚   â”œâ”€â”€ src/main/
+â”‚   â”‚   â”œâ”€â”€ AndroidManifest.xml      # Izin kamera, audio settings, vibrator, kiosk
+â”‚   â”‚   â”œâ”€â”€ java/com/examy/app/
+â”‚   â”‚   â”‚   â”œâ”€â”€ MainActivity.kt      # Halaman utama, validasi volume 80%, QR scan, token input
+â”‚   â”‚   â”‚   â”œâ”€â”€ CreateExamActivity.kt# Menu guru konfigurasi ujian & generator token/QR
+â”‚   â”‚   â”‚   â”œâ”€â”€ ExamActivity.kt      # Layar ujian terkunci, hitung mundur, alarm sirene, PIN keluar
+â”‚   â”‚   â”‚   â”œâ”€â”€ ExamConfig.kt        # Model data konfigurasi ujian & enkoder token Base64
+â”‚   â”‚   â”‚   â”œâ”€â”€ VolumeManager.kt     # Pengawas volume perangkat (wajib minimal 80%)
+â”‚   â”‚   â”‚   â”œâ”€â”€ AlarmSoundManager.kt # Pengelola bunyi sirene alarm keras & getar berkelanjutan
+â”‚   â”‚   â”‚   â”œâ”€â”€ ExamWebViewClient.kt # Whitelist domain, anti-copy script, resilient error handler
+â”‚   â”‚   â”‚   â””â”€â”€ SecurityManager.kt   # Logika Kiosk, FLAG_SECURE, & verifikasi 3-lapis PIN
+â”‚   â”‚   â””â”€â”€ res/                     # Layout XML, dialog, icon, warna, & string multibahasa
+â”œâ”€â”€ replica/                         # Catatan audit Clean-Room & matriks fitur lengkap
+â””â”€â”€ README.md
 ```
 
 ---
 
-## Panduan Kompilasi Menjadi APK
+## Kompilasi Otomatis (CI/CD GitHub Actions)
 
-### Cara 1: Kompilasi Otomatis via GitHub Actions (Paling Praktis)
-Proyek ini sudah dilengkapi dengan alur kerja CI/CD di `.github/workflows/build-apk.yml`.
-1. Push folder `C:\Users\LENOVO\Documents\Examy` ke repository GitHub Anda:
-   ```bash
-   git add .
-   git commit -m "Update Examy: Menu Buat Ujian, Volume 80%, 3-Lapis PIN, & Alarm Sirene"
-   git push origin main
-   ```
-2. Buka tab **Actions** di GitHub.
-3. Workflow akan otomatis mengompilasi file **`Examy-Debug-APK`** dan **`Examy-Release-APK`** siap pasang di HP siswa!
-
-### Cara 2: Buka di Android Studio
-1. Buka aplikasi **Android Studio**.
-2. Pilih **Open** dan arahkan ke folder `C:\Users\LENOVO\Documents\Examy`.
-3. Tunggu proses Gradle Sync selesai.
-4. Klik menu **Build** > **Build Bundle(s) / APK(s)** > **Build APK(s)**.
+Proyek ini telah dikonfigurasi penuh dengan GitHub Actions di `.github/workflows/build-apk.yml`:
+- Setiap kali ada push ke branch `main`, GitHub Actions akan:
+  1. Mengompilasi source code menjadi file APK Android.
+  2. Otomatis membuat/memperbarui **GitHub Release** dengan file **`Examy.apk` langsung (tanpa ZIP)**.
+  3. Menyediakan artefak debug & release.
