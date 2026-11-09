@@ -7,6 +7,9 @@ on:
     branches: [ "main", "master" ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,6 +32,19 @@ jobs:
       - name: Build Debug APK
         run: gradle assembleDebug --stacktrace
 
+      - name: Build Release APK
+        run: gradle assembleRelease --stacktrace
+
+      - name: Prepare Direct APK Binaries
+        run: |
+          mkdir -p dist
+          # Copy debug APK as the primary ready-to-install Examy.apk
+          cp app/build/outputs/apk/debug/*-debug.apk dist/Examy.apk || cp app/build/outputs/apk/debug/*.apk dist/Examy.apk
+          cp app/build/outputs/apk/debug/*-debug.apk dist/Examy-Debug.apk || cp app/build/outputs/apk/debug/*.apk dist/Examy-Debug.apk
+          if ls app/build/outputs/apk/release/*.apk 1> /dev/null 2>&1; then
+            cp app/build/outputs/apk/release/*.apk dist/Examy-Release-unsigned.apk
+          fi
+
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -36,12 +52,34 @@ jobs:
           path: app/build/outputs/apk/debug/*.apk
           retention-days: 14
 
-      - name: Build Release APK
-        run: gradle assembleRelease --stacktrace
-
       - name: Upload Release APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Examy-Release-APK
           path: app/build/outputs/apk/release/*.apk
           retention-days: 14
+
+      - name: Publish Direct APK to GitHub Releases (No ZIP)
+        if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.1
+          name: "Examy v1.0.1 (Menu Guru & Volume 80%)"
+          body: |
+            ### ðŸ“± Unduh Langsung Examy APK (Tanpa ZIP)
+            
+            Klik link di bawah ini langsung dari HP Android untuk mengunduh dan menginstal aplikasi secara instan:
+            
+            - ðŸ“¥ **[Unduh Examy.apk Langsung](https://github.com/qiraati-sby/examy/releases/download/v1.0.1/Examy.apk)**
+            
+            ---
+            
+            #### ðŸŒŸ Fitur Baru di Versi Ini:
+            - **Menu Guru (Exam Creator)**: Input mapel, link Google Form/LAN, jadwal, durasi, dan generator token/QR Code instan.
+            - **Syarat Volume Minimal 80%**: Memastikan HP tidak di-mute sebelum dan selama ujian.
+            - **Sistem Tiga Lapis PIN**: PIN Siswa (mulai), PIN Pengawas (matikan sirene), dan PIN Keluar (selesai normal).
+            - **Sirene Alarm Pelanggaran**: Alarm keras dan getar jika siswa berpindah aplikasi lebih dari 5 detik.
+            - **Kiosk Lockdown & Anti-Contek**: Seleksi teks diblokir, screenshot dinonaktifkan (`FLAG_SECURE`).
+            - **Resilient LAN Error UI**: Jawaban form tidak hilang saat koneksi Wi-Fi terputus sesaat.
+          files: dist/*
+          generate_release_notes: false
