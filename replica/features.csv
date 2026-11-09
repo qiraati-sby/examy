@@ -12,3 +12,9 @@ Anti-cheat copy/paste and contextmenu block,security,must,yes,yes,Injected CSS a
 Recent exam URLs quick access chips,navigation,should,no,yes,Saves up to 5 recently accessed exam URLs
 Customizable teacher proctor PIN,settings,should,no,yes,Configurable from settings dialog (default 1234)
 Direct automated APK build via GitHub Actions CI,devops,could,no,yes,Single-push cloud APK compilation
+Exam creation and configuration menu,teacher,must,no,yes,Configure subject name URL student PIN proctor PIN exit PIN schedule and duration
+Exam token and QR code generator,teacher,must,no,yes,Generates Base64 token payload and dynamic ZXing QR code image
+Strict 80% device volume enforcement,security,must,no,yes,Blocks exam entry and monitors volume to always remain at least 80%
+Violation continuous siren alarm,anti-cheat,must,no,yes,Blasts loud alarm ringtone and vibrator until Proctor PIN is entered
+3-tier PIN architecture,security,must,no,yes,Separates Student PIN Proctor Violation PIN and Normal Exit PIN
+Exam header countdown timer,exam,should,no,yes,Real-time visual countdown during exam session

@@ -16,10 +16,11 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/tvExitDialogDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="@string/dialog_exit_desc"
+        android:text="Masukkan PIN Keluar atau PIN Pengawas untuk mengakhiri sesi ujian:"
         android:textColor="@color/text_secondary"
         android:textSize="13sp" />
 

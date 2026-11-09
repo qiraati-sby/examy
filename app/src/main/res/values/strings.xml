@@ -36,4 +36,36 @@
     <string name="btn_save">Simpan</string>
     <string name="toast_pin_saved">PIN pengawas berhasil disimpan.</string>
     <string name="toast_invalid_url">Format URL tidak valid. Masukkan alamat URL atau IP yang benar.</string>
+
+    <!-- Create Exam Menu (Teacher) -->
+    <string name="menu_create_exam_title">Menu Guru: Buat Sesi Ujian</string>
+    <string name="menu_create_exam_desc">Atur mapel, durasi, PIN siswa, PIN pengawas, dan generate token/QR ujian</string>
+    <string name="title_create_exam">Konfigurasi &amp; Buat Ujian</string>
+    <string name="label_subject_name">Nama Mata Pelajaran</string>
+    <string name="hint_subject_name">Cth: Penilaian Akhir Semester - Matematika</string>
+    <string name="label_exam_link">Link Ujian / Google Form</string>
+    <string name="hint_exam_link">https://docs.google.com/forms/d/e/... atau IP LAN</string>
+    <string name="label_student_pin">PIN Utama Siswa</string>
+    <string name="hint_student_pin">PIN untuk siswa masuk ujian (4-8 digit)</string>
+    <string name="label_proctor_pin">PIN Pengawas (Pelanggaran)</string>
+    <string name="hint_proctor_pin">PIN untuk mematikan alarm jika siswa melanggar</string>
+    <string name="label_exit_pin">PIN Keluar</string>
+    <string name="hint_exit_pin">PIN untuk mengakhiri/keluar sesi ujian</string>
+    <string name="label_start_time">Waktu Mulai</string>
+    <string name="hint_start_time">08:00</string>
+    <string name="label_end_time">Waktu Selesai</string>
+    <string name="hint_end_time">10:00</string>
+    <string name="label_duration">Durasi Pengerjaan (Menit)</string>
+    <string name="hint_duration">Cth: 90</string>
+    <string name="btn_generate_token">Generate Token &amp; QR Code</string>
+
+    <!-- Volume & Violation Alerts -->
+    <string name="alert_volume_title">Volume HP Minimal 80%!</string>
+    <string name="alert_volume_desc">Aplikasi Examy mewajibkan volume HP minimal 80% agar alarm keamanan dapat berbunyi nyaring jika terjadi pelanggaran.</string>
+    <string name="btn_set_volume">Naikkan Volume &gt;= 80%</string>
+    <string name="btn_check_volume">Cek Ulang Volume</string>
+    <string name="alert_violation_title">PELANGGARAN TERDETEKSI!</string>
+    <string name="alert_violation_desc">Terdeteksi aktivitas mencurigakan atau keluar dari sesi ujian. Alarm berbunyi kencang!</string>
+    <string name="btn_stop_alarm">Buka Kunci &amp; Matikan Alarm</string>
+    <string name="dialog_student_confirm_title">Konfirmasi Masuk Ujian</string>
 </resources>

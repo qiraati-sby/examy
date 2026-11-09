@@ -7,6 +7,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
+    <!-- Audio & Volume controls for alarm and 80% volume enforcement -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <!-- Camera for scanning QR Codes -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature
@@ -47,6 +51,12 @@
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.Examy.ExamFullscreen" />
+
+        <!-- Teacher / Proctor Exam Creation Activity -->
+        <activity
+            android:name=".CreateExamActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- ZXing Scanner Activity -->
         <activity

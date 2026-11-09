@@ -16,6 +16,8 @@ object SecurityManager {
 
     private const val PREFS_NAME = "examy_secure_prefs"
     private const val KEY_PROCTOR_PIN = "proctor_pin"
+    private const val KEY_EXIT_PIN = "exit_pin"
+    private const val KEY_ACTIVE_CONFIG = "active_exam_config"
     private const val KEY_RECENT_URLS = "recent_urls"
     const val DEFAULT_PIN = "1234"
 
@@ -31,9 +33,44 @@ object SecurityManager {
         getPrefs(context).edit().putString(KEY_PROCTOR_PIN, newPin).apply()
     }
 
+    fun getExitPin(context: Context): String {
+        return getPrefs(context).getString(KEY_EXIT_PIN, DEFAULT_PIN) ?: DEFAULT_PIN
+    }
+
+    fun setExitPin(context: Context, newPin: String) {
+        getPrefs(context).edit().putString(KEY_EXIT_PIN, newPin).apply()
+    }
+
+    fun saveActiveExamConfig(context: Context, config: ExamConfig) {
+        getPrefs(context).edit().putString(KEY_ACTIVE_CONFIG, config.toJson()).apply()
+        // Also update standard pins
+        setProctorPin(context, config.proctorPin)
+        setExitPin(context, config.exitPin)
+    }
+
+    fun getActiveExamConfig(context: Context): ExamConfig? {
+        val raw = getPrefs(context).getString(KEY_ACTIVE_CONFIG, null) ?: return null
+        return ExamConfig.fromJson(raw)
+    }
+
     fun verifyPin(context: Context, inputPin: String): Boolean {
         val currentPin = getProctorPin(context)
         return inputPin == currentPin
+    }
+
+    fun verifyProctorPin(context: Context, inputPin: String, config: ExamConfig?): Boolean {
+        val expected = config?.proctorPin?.takeIf { it.isNotBlank() } ?: getProctorPin(context)
+        return inputPin == expected
+    }
+
+    fun verifyExitPin(context: Context, inputPin: String, config: ExamConfig?): Boolean {
+        val expected = config?.exitPin?.takeIf { it.isNotBlank() } ?: getExitPin(context)
+        return inputPin == expected
+    }
+
+    fun verifyStudentPin(inputPin: String, config: ExamConfig): Boolean {
+        if (config.studentPin.isBlank()) return true
+        return inputPin == config.studentPin
     }
 
     fun getRecentUrls(context: Context): List<String> {
