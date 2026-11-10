@@ -38,13 +38,9 @@ jobs:
       - name: Prepare Direct APK Binaries
         run: |
           mkdir -p dist
-          # Copy debug APK as the primary ready-to-install Examy.apk and Examy-v3.apk
+          # Copy debug APK as the ready-to-install Examy.apk and Examy-v3.apk
           cp app/build/outputs/apk/debug/*-debug.apk dist/Examy.apk || cp app/build/outputs/apk/debug/*.apk dist/Examy.apk
           cp dist/Examy.apk dist/Examy-v3.apk
-          cp dist/Examy.apk dist/Examy-Debug.apk
-          if ls app/build/outputs/apk/release/*.apk 1> /dev/null 2>&1; then
-            cp app/build/outputs/apk/release/*.apk dist/Examy-Release-unsigned.apk
-          fi
 
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
@@ -67,16 +63,16 @@ jobs:
           tag_name: v1.0.2
           name: "Examy v1.0.2 - Operator Santri (Versi 3)"
           body: |
-            ### ðŸ“± Unduh Langsung Examy APK Versi 3 (Tanpa ZIP)
+            ### 📱 Unduh Langsung Examy APK Versi 3 (Tanpa ZIP)
             
             Versi terbaru dengan jadwal tanggal & jam terpadu, riwayat sesi ujian, perbaikan teks menu lengkap, dan identitas resmi **Operator Santri**:
             
-            - ðŸ“¥ **[Unduh Examy-v3.apk Langsung](https://github.com/qiraati-sby/examy/releases/download/v1.0.2/Examy-v3.apk)**
-            - ðŸ“¥ **[Unduh Examy.apk (Rilis Utama)](https://github.com/qiraati-sby/examy/releases/download/v1.0.2/Examy.apk)**
+            - 📥 **[Unduh Examy-v3.apk Langsung](https://github.com/qiraati-sby/examy/releases/download/v1.0.2/Examy-v3.apk)**
+            - 📥 **[Unduh Examy.apk (Rilis Utama)](https://github.com/qiraati-sby/examy/releases/download/v1.0.2/Examy.apk)**
             
             ---
             
-            #### ðŸŒŸ Fitur & Pembaruan Versi 3:
+            #### 🌟 Fitur & Pembaruan Versi 3:
             1. **Operator Santri Branding**: Identitas resmi di beranda bawah tengah (Operator hitam, Santri hijau, garis bawah merah).
             2. **Jadwal & Waktu Terpadu**: Tanggal Mulai dan Tanggal Selesai menyatu dengan Jam Mulai dan Jam Selesai (*DatePicker & TimePicker*).
             3. **Riwayat Sesi Ujian Otomatis**: Setiap generate sesi ujian tersimpan di menu riwayat, bisa dibuka ulang QR-nya, disalin tokennya, atau dimuat kembali ke formulir.
