@@ -3,14 +3,11 @@ package com.examy.app
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Build
-import android.view.View
-import android.view.WindowInsets
-import android.view.WindowInsetsController
 import android.view.WindowManager
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import org.json.JSONArray
 
 object SecurityManager {
 
@@ -19,6 +16,7 @@ object SecurityManager {
     private const val KEY_EXIT_PIN = "exit_pin"
     private const val KEY_ACTIVE_CONFIG = "active_exam_config"
     private const val KEY_RECENT_URLS = "recent_urls"
+    private const val KEY_EXAM_HISTORY = "exam_history_json_list"
     const val DEFAULT_PIN = "1234"
 
     private fun getPrefs(context: Context): SharedPreferences {
@@ -46,11 +44,57 @@ object SecurityManager {
         // Also update standard pins
         setProctorPin(context, config.proctorPin)
         setExitPin(context, config.exitPin)
+        // Auto-save to history as well
+        saveExamToHistory(context, config)
     }
 
     fun getActiveExamConfig(context: Context): ExamConfig? {
         val raw = getPrefs(context).getString(KEY_ACTIVE_CONFIG, null) ?: return null
         return ExamConfig.fromJson(raw)
+    }
+
+    // --- Exam History Management ---
+    fun getExamHistory(context: Context): List<ExamConfig> {
+        val raw = getPrefs(context).getString(KEY_EXAM_HISTORY, null) ?: return emptyList()
+        return try {
+            val array = JSONArray(raw)
+            val list = mutableListOf<ExamConfig>()
+            for (i in 0 until array.length()) {
+                val jsonStr = array.getString(i)
+                ExamConfig.fromJson(jsonStr)?.let { list.add(it) }
+            }
+            list
+        } catch (_: Exception) {
+            emptyList()
+        }
+    }
+
+    fun saveExamToHistory(context: Context, config: ExamConfig) {
+        val list = getExamHistory(context).toMutableList()
+        // Deduplicate by token or subject+url
+        list.removeAll { it.token == config.token || (it.subjectName == config.subjectName && it.examUrl == config.examUrl && it.startDate == config.startDate) }
+        list.add(0, config)
+        val trimmed = list.take(20)
+
+        val array = JSONArray()
+        for (item in trimmed) {
+            array.put(item.toJson())
+        }
+        getPrefs(context).edit().putString(KEY_EXAM_HISTORY, array.toString()).apply()
+    }
+
+    fun deleteExamFromHistory(context: Context, token: String) {
+        val list = getExamHistory(context).toMutableList()
+        list.removeAll { it.token == token }
+        val array = JSONArray()
+        for (item in list) {
+            array.put(item.toJson())
+        }
+        getPrefs(context).edit().putString(KEY_EXAM_HISTORY, array.toString()).apply()
+    }
+
+    fun clearExamHistory(context: Context) {
+        getPrefs(context).edit().remove(KEY_EXAM_HISTORY).apply()
     }
 
     fun verifyPin(context: Context, inputPin: String): Boolean {
