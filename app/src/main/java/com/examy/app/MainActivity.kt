@@ -103,11 +103,11 @@ class MainActivity : AppCompatActivity() {
         val isSufficient = pct >= VolumeManager.MIN_VOLUME_PERCENT
 
         if (isSufficient) {
-            binding.tvVolumePercentTitle.text = "Volume HP: $pct% (Memenuhi Syarat Minimal 80% ✓)"
+            binding.tvVolumePercentTitle.text = "Volume HP: $pct% (Memenuhi Syarat Minimal 80% âœ“)"
             binding.tvVolumePercentTitle.setTextColor(ContextCompat.getColor(this, R.color.success))
             binding.btnAdjustVolume.visibility = View.GONE
         } else {
-            binding.tvVolumePercentTitle.text = "Volume HP: $pct% (Kurang dari 80% ✗)"
+            binding.tvVolumePercentTitle.text = "Volume HP: $pct% (Kurang dari 80% âœ—)"
             binding.tvVolumePercentTitle.setTextColor(ContextCompat.getColor(this, R.color.danger))
             binding.btnAdjustVolume.visibility = View.VISIBLE
         }
@@ -161,7 +161,7 @@ class MainActivity : AppCompatActivity() {
         val btnSubmit = dialogView.findViewById<Button>(R.id.btnSubmitStudentConfirm)
 
         tvSubject.text = config.subjectName.ifBlank { "Ujian CBT Online" }
-        tvSchedule.text = "Jadwal: ${config.startTime} - ${config.endTime} (${config.durationMinutes} Menit)"
+        tvSchedule.text = "Jadwal: ${config.getScheduleDisplay()}"
 
         val vol = VolumeManager.getMediaVolumePercentage(this)
         tvVolume.text = "Volume HP: $vol% (Memenuhi Syarat Minimal 80%)"
