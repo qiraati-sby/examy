@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        android:text="10 Nov 2026 â€¢ 08:00 s/d 10:00 (90 Menit)"
+        android:text="10 Nov 2026 - 08:00 s/d 10:00 (90 Menit)"
         android:textColor="@color/text_secondary"
         android:textSize="12sp" />
 
@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="Token: EXAM-1234 â€¢ PIN Siswa: 123456"
+        android:text="Token: EXAM-1234 | PIN Siswa: 123456"
         android:textColor="@color/primary"
         android:textSize="12sp"
         android:textStyle="bold" />
@@ -63,31 +63,35 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnHistoryViewQr"
             android:layout_width="0dp"
-            android:layout_height="38dp"
+            android:layout_height="40dp"
             android:layout_marginEnd="6dp"
             android:layout_weight="1"
-            android:background="@drawable/bg_primary_button"
             android:text="Lihat QR &amp; Token"
             android:textAllCaps="false"
             android:textColor="@color/text_on_primary"
             android:textSize="12sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:backgroundTint="@color/primary"
+            app:cornerRadius="8dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnHistoryReuse"
             android:layout_width="0dp"
-            android:layout_height="38dp"
+            android:layout_height="40dp"
             android:layout_marginStart="6dp"
             android:layout_weight="1"
-            android:background="@drawable/bg_card"
             android:text="Gunakan Lagi"
             android:textAllCaps="false"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/primary"
             android:textSize="12sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:backgroundTint="#FFFFFF"
+            app:cornerRadius="8dp"
+            app:strokeColor="@color/primary"
+            app:strokeWidth="1.2dp" />
     </LinearLayout>
 
 </LinearLayout>

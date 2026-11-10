@@ -46,26 +46,31 @@
         android:textSize="13sp"
         android:textStyle="bold" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAutoRaiseVolume"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/bg_primary_button"
         android:text="@string/btn_set_volume"
         android:textAllCaps="false"
         android:textColor="@color/text_on_primary"
         android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:backgroundTint="@color/primary"
+        app:cornerRadius="10dp" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCheckVolumeAgain"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@drawable/bg_secondary_button"
         android:text="@string/btn_check_volume"
         android:textAllCaps="false"
-        android:textColor="@color/text_primary"
-        android:textSize="14sp" />
+        android:textColor="@color/primary"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:backgroundTint="#EEF2FF"
+        app:cornerRadius="10dp"
+        app:strokeColor="@color/primary"
+        app:strokeWidth="1.2dp" />
 
 </LinearLayout>

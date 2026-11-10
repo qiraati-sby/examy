@@ -1,5 +1,7 @@
 package com.examy.app
 
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -76,6 +78,23 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, CreateExamActivity::class.java))
         }
 
+        // Paste URL from Clipboard
+        binding.btnPasteUrlMain.setOnClickListener {
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = clipboard.primaryClip
+            if (clip != null && clip.itemCount > 0) {
+                val pasteData = clip.getItemAt(0).text?.toString()?.trim()
+                if (!pasteData.isNullOrEmpty()) {
+                    binding.etExamUrl.setText(pasteData)
+                    Toast.makeText(this, "Tautan berhasil ditempel dari clipboard!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Clipboard kosong atau bukan teks", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "Clipboard kosong", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         // Start Exam Button click
         binding.btnStartExam.setOnClickListener {
             val rawInput = binding.etExamUrl.text.toString().trim()
@@ -103,11 +122,11 @@ class MainActivity : AppCompatActivity() {
         val isSufficient = pct >= VolumeManager.MIN_VOLUME_PERCENT
 
         if (isSufficient) {
-            binding.tvVolumePercentTitle.text = "Volume HP: $pct% (Memenuhi Syarat Minimal 80% âœ“)"
+            binding.tvVolumePercentTitle.text = "Volume HP: $pct% (Memenuhi Syarat Minimal 80% [OK])"
             binding.tvVolumePercentTitle.setTextColor(ContextCompat.getColor(this, R.color.success))
             binding.btnAdjustVolume.visibility = View.GONE
         } else {
-            binding.tvVolumePercentTitle.text = "Volume HP: $pct% (Kurang dari 80% âœ—)"
+            binding.tvVolumePercentTitle.text = "Volume HP: $pct% (Kurang dari 80% [Perlu Dinaikkan])"
             binding.tvVolumePercentTitle.setTextColor(ContextCompat.getColor(this, R.color.danger))
             binding.btnAdjustVolume.visibility = View.VISIBLE
         }

@@ -46,10 +46,10 @@ data class ExamConfig(
      */
     fun getScheduleDisplay(): String {
         val startParts = listOf(startDate, startTime).filter { it.isNotBlank() }
-        val startStr = startParts.joinToString(" â€¢ ")
+        val startStr = startParts.joinToString(", ")
 
         val endParts = listOf(endDate, endTime).filter { it.isNotBlank() }
-        val endStr = endParts.joinToString(" â€¢ ")
+        val endStr = endParts.joinToString(", ")
 
         return when {
             startStr.isNotBlank() && endStr.isNotBlank() -> "$startStr s/d $endStr ($durationMinutes Menit)"

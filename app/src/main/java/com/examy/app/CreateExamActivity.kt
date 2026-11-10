@@ -73,6 +73,23 @@ class CreateExamActivity : AppCompatActivity() {
             }
         }
 
+        // Paste URL from Clipboard
+        binding.btnPasteExamUrl.setOnClickListener {
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = clipboard.primaryClip
+            if (clip != null && clip.itemCount > 0) {
+                val pasteData = clip.getItemAt(0).text?.toString()?.trim()
+                if (!pasteData.isNullOrEmpty()) {
+                    binding.etExamUrl.setText(pasteData)
+                    Toast.makeText(this, "Tautan berhasil ditempel dari clipboard!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Clipboard kosong atau bukan teks", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "Clipboard kosong", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         // Preset Google Form Link
         binding.btnPresetGoogleForm.setOnClickListener {
             binding.etExamUrl.setText("https://docs.google.com/forms/d/e/1FAIpQLSc_sample_cbt_exam/viewform")
@@ -267,7 +284,7 @@ class CreateExamActivity : AppCompatActivity() {
 
             tvSubject.text = item.subjectName.ifBlank { "Ujian CBT" }
             tvSchedule.text = item.getScheduleDisplay()
-            tvPins.text = "Token: ${item.token} â€¢ PIN Siswa: ${item.studentPin}"
+            tvPins.text = "Token: ${item.token} | PIN Siswa: ${item.studentPin}"
 
             // View QR Dialog
             btnViewQr.setOnClickListener {
@@ -313,7 +330,7 @@ class CreateExamActivity : AppCompatActivity() {
         val btnShare = dialogView.findViewById<Button>(R.id.btnShareToken)
         val btnDone = dialogView.findViewById<Button>(R.id.btnDoneTokenDialog)
 
-        tvSubject.text = "${config.subjectName}\n${config.getScheduleDisplay()} â€¢ PIN Siswa: ${config.studentPin}"
+        tvSubject.text = "${config.subjectName}\n${config.getScheduleDisplay()} | PIN Siswa: ${config.studentPin}"
         tvTokenCode.text = config.token
 
         if (qrBitmap != null) {
@@ -334,7 +351,7 @@ class CreateExamActivity : AppCompatActivity() {
 
         btnShare.setOnClickListener {
             val shareText = """
-                ðŸ“Œ *SESI UJIAN EXAMY*
+                [SESI UJIAN EXAMY]
                 Mata Pelajaran: ${config.subjectName}
                 Jadwal: ${config.getScheduleDisplay()}
                 PIN Siswa: *${config.studentPin}*
