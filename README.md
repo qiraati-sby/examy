@@ -13,41 +13,41 @@ Aplikasi ini mengombinasikan perlindungan tingkat sistem operasi Android (*LockT
 
 ---
 
-## ðŸ“¥ Daftar Unduhan Rilis APK (Langsung Pasang Tanpa ZIP)
+## 📥 Daftar Unduhan Rilis APK (Langsung Pasang Tanpa ZIP)
 
 Anda dapat mengunduh file `.apk` resmi langsung ke HP Android tanpa perlu mengekstrak file ZIP:
 
 | Versi | Status | Link Unduh Langsung | Catatan Utama |
 | :--- | :--- | :--- | :--- |
-| **Versi 3 (v1.0.2)** | ðŸŸ¢ **Terbaru / Rekomendasi** | ðŸ“² **[Unduh Examy-v3.apk](https://github.com/qiraati-sby/examy/releases/download/v1.0.2/Examy-v3.apk)** | **Operator Santri Edition**: Jadwal tanggal &amp; jam terpadu, riwayat sesi ujian otomatis, label menu lengkap, bebas redundansi. |
-| **Versi 2 (v1.0.1)** | ðŸŸ¡ Stabil Sebelumnya | ðŸ“² **[Unduh Examy-v2.apk](https://github.com/qiraati-sby/examy/releases/download/v1.0.1/Examy.apk)** | Ditambahkan Menu Guru (Exam Creator), 3 Lapis PIN, Syarat Volume 80%, dan Alarm Sirene Pelanggaran. |
-| **Versi 1 (v1.0.0)** | âšª Rilis Dasar (Legacy) | ðŸ“² **[Unduh Examy-v1.apk](https://github.com/qiraati-sby/examy/releases/download/v1.0.0/Examy.apk)** | Versi awal: Kiosk dasar, input URL manual, dan pencegahan tangkapan layar. |
+| **Versi 3 (v1.0.2)** | 🟢 **Terbaru / Rekomendasi** | 📲 **[Unduh Examy-v3.apk](https://github.com/qiraati-sby/examy/releases/download/v1.0.2/Examy-v3.apk)** | **Operator Santri Edition**: Jadwal tanggal &amp; jam terpadu, riwayat sesi ujian otomatis, label menu lengkap, bebas redundansi. |
+| **Versi 2 (v1.0.1)** | 🟡 Stabil Sebelumnya | 📲 **[Unduh Examy-v2.apk](https://github.com/qiraati-sby/examy/releases/download/v1.0.1/Examy-v2.apk)** | Ditambahkan Menu Guru (Exam Creator), 3 Lapis PIN, Syarat Volume 80%, dan Alarm Sirene Pelanggaran. |
+| **Versi 1 (v1.0.0)** | ⚪ Rilis Dasar (Legacy) | 📲 **[Unduh Examy-v1.apk](https://github.com/qiraati-sby/examy/releases/download/v1.0.0/Examy-v1.apk)** | Versi awal: Kiosk dasar, input URL manual, dan pencegahan tangkapan layar. |
 
-ðŸŒ **[Kunjungi Halaman Rilis GitHub Resmi](https://github.com/qiraati-sby/examy/releases)**
+🌐 **[Kunjungi Halaman Rilis GitHub Resmi](https://github.com/qiraati-sby/examy/releases)**
 
 ---
 
-## ðŸŒŸ Perbandingan Fitur Antar Versi
+## 🌟 Perbandingan Fitur Antar Versi
 
 | Fitur / Kemampuan | Versi 1 (v1.0.0) | Versi 2 (v1.0.1) | **Versi 3 (v1.0.2 - Terbaru)** |
 | :--- | :---: | :---: | :---: |
-| **Kiosk Fullscreen LockTask &amp; FLAG_SECURE** | âœ… | âœ… | âœ… |
-| **Dukungan CBT Server LAN &amp; Google Form** | âœ… | âœ… | âœ… |
-| **Injeksi Anti-Copy Teks &amp; ContextMenu** | âœ… | âœ… | âœ… |
-| **Menu Konfigurasi Guru (Buat Sesi Ujian)** | âŒ | âœ… | âœ… |
-| **Generator Token &amp; Barcode QR (ZXing)** | âŒ | âœ… | âœ… |
-| **Penegakan Wajib Volume Minimal 80%** | âŒ | âœ… | âœ… |
-| **Sirene Alarm Pelanggaran + Getar Keras** | âŒ | âœ… | âœ… |
-| **Grace Period 5 Detik (Anti-False Positive)** | âŒ | âœ… | âœ… |
-| **Sistem Tiga Lapis PIN (Siswa, Pengawas, Keluar)** | âŒ | âœ… | âœ… |
-| **Jadwal Terpadu (Tanggal Mulai s/d Tanggal Selesai)** | âŒ | âŒ | âœ… |
-| **Riwayat Sesi Ujian (Lihat QR, Pakai Lagi, Hapus)** | âŒ | âŒ | âœ… |
-| **Label Teks Lengkap Seluruh Menu &amp; Tombol** | âŒ | Parsial | âœ… |
-| **Identitas Resmi "Operator Santri"** | âŒ | âŒ | âœ… |
+| **Kiosk Fullscreen LockTask &amp; FLAG_SECURE** | ✅ | ✅ | ✅ |
+| **Dukungan CBT Server LAN &amp; Google Form** | ✅ | ✅ | ✅ |
+| **Injeksi Anti-Copy Teks &amp; ContextMenu** | ✅ | ✅ | ✅ |
+| **Menu Konfigurasi Guru (Buat Sesi Ujian)** | ❌ | ✅ | ✅ |
+| **Generator Token &amp; Barcode QR (ZXing)** | ❌ | ✅ | ✅ |
+| **Penegakan Wajib Volume Minimal 80%** | ❌ | ✅ | ✅ |
+| **Sirene Alarm Pelanggaran + Getar Keras** | ❌ | ✅ | ✅ |
+| **Grace Period 5 Detik (Anti-False Positive)** | ❌ | ✅ | ✅ |
+| **Sistem Tiga Lapis PIN (Siswa, Pengawas, Keluar)** | ❌ | ✅ | ✅ |
+| **Jadwal Terpadu (Tanggal Mulai s/d Tanggal Selesai)** | ❌ | ❌ | ✅ |
+| **Riwayat Sesi Ujian (Lihat QR, Pakai Lagi, Hapus)** | ❌ | ❌ | ✅ |
+| **Label Teks Lengkap Seluruh Menu &amp; Tombol** | ❌ | Parsial | ✅ |
+| **Identitas Resmi "Operator Santri"** | ❌ | ❌ | ✅ |
 
 ---
 
-## ðŸ“– Panduan Lengkap Penggunaan
+## 📖 Panduan Lengkap Penggunaan
 
 ### 1. Peran Guru / Pengawas (Membuat &amp; Mengelola Sesi Ujian)
 1. Buka aplikasi **Examy** pada ponsel pengawas/guru.
@@ -88,39 +88,39 @@ Anda dapat mengunduh file `.apk` resmi langsung ke HP Android tanpa perlu mengek
 
 ---
 
-## ðŸ“ Struktur Direktori Proyek
+## 📁 Struktur Direktori Proyek
 
 ```
 examy/
-â”œâ”€â”€ .github/
-â”‚   â””â”€â”€ workflows/
-â”‚       â””â”€â”€ build-apk.yml            # CI/CD Otomasi kompilasi APK & rilis GitHub Actions
-â”œâ”€â”€ app/
-â”‚   â”œâ”€â”€ build.gradle.kts             # Konfigurasi dependensi modul Android
-â”‚   â”œâ”€â”€ src/main/
-â”‚   â”‚   â”œâ”€â”€ AndroidManifest.xml      # Deklarasi izin kamera, audio, vibrator, kiosk mode
-â”‚   â”‚   â”œâ”€â”€ java/com/examy/app/
-â”‚   â”‚   â”‚   â”œâ”€â”€ MainActivity.kt      # Halaman utama, identitas Operator Santri, scanner QR
-â”‚   â”‚   â”‚   â”œâ”€â”€ CreateExamActivity.kt# Menu guru, jadwal terpadu, riwayat generate, QR generator
-â”‚   â”‚   â”‚   â”œâ”€â”€ ExamActivity.kt      # Layar ujian terkunci, hitung mundur, penanganan sirene
-â”‚   â”‚   â”‚   â”œâ”€â”€ ExamConfig.kt        # Model data sesi ujian (tanggal, jam, token, 3 PIN)
-â”‚   â”‚   â”‚   â”œâ”€â”€ VolumeManager.kt     # Pengawas penegakan volume minimal 80%
-â”‚   â”‚   â”‚   â”œâ”€â”€ AlarmSoundManager.kt # Manajemen audio sirene & vibrator berkelanjutan
-â”‚   â”‚   â”‚   â”œâ”€â”€ ExamWebViewClient.kt # Proteksi anti-copy, bypass SSL LAN, error banner aman
-â”‚   â”‚   â”‚   â””â”€â”€ SecurityManager.kt   # Kiosk Mode, FLAG_SECURE, & penyimpanan riwayat ujian
-â”‚   â”‚   â””â”€â”€ res/
-â”‚   â”‚       â”œâ”€â”€ layout/              # Tata letak antarmuka XML (MainActivity, CreateExam, dsb)
-â”‚   â”‚       â”œâ”€â”€ values/              # Warna, tema, dan string multibahasa
-â”‚   â”‚       â””â”€â”€ drawable/            # Ikon, tombol latar belakang, dan styling visual
-â”œâ”€â”€ logo.svg                         # Vektor logo resmi Examy
-â”œâ”€â”€ build.gradle.kts                 # Konfigurasi root build Gradle
-â”œâ”€â”€ settings.gradle.kts              # Konfigurasi repositori modul Gradle
-â””â”€â”€ README.md                        # Dokumentasi resmi proyek
+├── .github/
+│   └── workflows/
+│       └── build-apk.yml            # CI/CD Otomasi kompilasi APK & rilis GitHub Actions
+├── app/
+│   ├── build.gradle.kts             # Konfigurasi dependensi modul Android
+│   ├── src/main/
+│   │   ├── AndroidManifest.xml      # Deklarasi izin kamera, audio, vibrator, kiosk mode
+│   │   ├── java/com/examy/app/
+│   │   │   ├── MainActivity.kt      # Halaman utama, identitas Operator Santri, scanner QR
+│   │   │   ├── CreateExamActivity.kt# Menu guru, jadwal terpadu, riwayat generate, QR generator
+│   │   │   ├── ExamActivity.kt      # Layar ujian terkunci, hitung mundur, penanganan sirene
+│   │   │   ├── ExamConfig.kt        # Model data sesi ujian (tanggal, jam, token, 3 PIN)
+│   │   │   ├── VolumeManager.kt     # Pengawas penegakan volume minimal 80%
+│   │   │   ├── AlarmSoundManager.kt # Manajemen audio sirene & vibrator berkelanjutan
+│   │   │   ├── ExamWebViewClient.kt # Proteksi anti-copy, bypass SSL LAN, error banner aman
+│   │   │   └── SecurityManager.kt   # Kiosk Mode, FLAG_SECURE, & penyimpanan riwayat ujian
+│   │   └── res/
+│   │       ├── layout/              # Tata letak antarmuka XML (MainActivity, CreateExam, dsb)
+│   │       ├── values/              # Warna, tema, dan string multibahasa
+│   │       └── drawable/            # Ikon, tombol latar belakang, dan styling visual
+├── logo.svg                         # Vektor logo resmi Examy
+├── build.gradle.kts                 # Konfigurasi root build Gradle
+├── settings.gradle.kts              # Konfigurasi repositori modul Gradle
+└── README.md                        # Dokumentasi resmi proyek
 ```
 
 ---
 
-## ðŸ› ï¸ Kompilasi Mandiri (Build from Source)
+## 🛠️ Kompilasi Mandiri (Build from Source)
 
 ### Menggunakan GitHub Actions CI/CD (Otomatis)
 Setiap kali ada pembaruan kode yang di-push ke branch `main`, GitHub Actions akan otomatis:
@@ -135,13 +135,13 @@ Setiap kali ada pembaruan kode yang di-push ke branch `main`, GitHub Actions aka
 
 ---
 
-## ðŸ“± Persyaratan Sistem
+## 📱 Persyaratan Sistem
 - **Sistem Operasi Siswa:** Android 7.0 (Nougat / API level 24) hingga Android 15+.
 - **Izin yang Digunakan:** Kamera (untuk pemindai QR Code), Akses Pengaturan Audio & Getar (untuk sirene pelanggaran), dan Layanan Kiosk Pinning (*startLockTask*).
 
 ---
 
-## ðŸ‘¥ Pengembang & Hak Cipta
+## 👥 Pengembang & Hak Cipta
 Dikembangkan dengan dedikasi untuk mendukung ekosistem pendidikan madrasah, pesantren, dan sekolah umum di Indonesia.
 
-ðŸ‡®ðŸ‡© **Operator Santri** â€” *Solusi CBT & Ujian Online yang Aman, Bersahabat, dan Tangguh.*
+🇮🇩 **Operator Santri** — *Solusi CBT & Ujian Online yang Aman, Bersahabat, dan Tangguh.*
