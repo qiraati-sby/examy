@@ -17,7 +17,10 @@ object SecurityManager {
     private const val KEY_ACTIVE_CONFIG = "active_exam_config"
     private const val KEY_RECENT_URLS = "recent_urls"
     private const val KEY_EXAM_HISTORY = "exam_history_json_list"
+    private const val KEY_APP_THEME = "app_theme_mode"
     const val DEFAULT_PIN = "1234"
+    const val THEME_CLASSIC = "classic"
+    const val THEME_SANTRI = "santri"
 
     private fun getPrefs(context: Context): SharedPreferences {
         return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -168,6 +171,14 @@ object SecurityManager {
         } catch (_: Exception) {
             // Safely ignore if lock task was not running
         }
+    }
+
+    fun getAppTheme(context: Context): String {
+        return getPrefs(context).getString(KEY_APP_THEME, THEME_CLASSIC) ?: THEME_CLASSIC
+    }
+
+    fun setAppTheme(context: Context, theme: String) {
+        getPrefs(context).edit().putString(KEY_APP_THEME, theme).apply()
     }
 
     /**

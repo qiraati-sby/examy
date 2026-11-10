@@ -43,6 +43,7 @@ Anda dapat mengunduh file `.apk` resmi langsung ke HP Android tanpa perlu mengek
 | **Jadwal Terpadu (Tanggal Mulai s/d Tanggal Selesai)** | ❌ | ❌ | ✅ |
 | **Riwayat Sesi Ujian (Lihat QR, Pakai Lagi, Hapus)** | ❌ | ❌ | ✅ |
 | **Label Teks Lengkap Seluruh Menu &amp; Tombol** | ❌ | Parsial | ✅ |
+| **Pilihan Tema Warna (Theme Switcher)** | ❌ | ❌ | ✅ |
 | **Identitas Resmi "Operator Santri"** | ❌ | ❌ | ✅ |
 
 ---

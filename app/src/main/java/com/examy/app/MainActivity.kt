@@ -3,6 +3,8 @@ package com.examy.app
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -37,15 +39,30 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupUI()
+        applyTheme(SecurityManager.getAppTheme(this))
         updateVolumeIndicator()
     }
 
     override fun onResume() {
         super.onResume()
+        applyTheme(SecurityManager.getAppTheme(this))
         updateVolumeIndicator()
     }
 
     private fun setupUI() {
+        // Theme Switcher Buttons
+        binding.btnThemeClassic.setOnClickListener {
+            SecurityManager.setAppTheme(this, SecurityManager.THEME_CLASSIC)
+            applyTheme(SecurityManager.THEME_CLASSIC)
+            Toast.makeText(this, "Tema Klasik aktif", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.btnThemeSantri.setOnClickListener {
+            SecurityManager.setAppTheme(this, SecurityManager.THEME_SANTRI)
+            applyTheme(SecurityManager.THEME_SANTRI)
+            Toast.makeText(this, "Tema Santri Lime aktif", Toast.LENGTH_SHORT).show()
+        }
+
         // Volume card & button click
         binding.cardVolumeStatus.setOnClickListener {
             VolumeManager.enforceVolumeRequirement(this) {
@@ -89,6 +106,68 @@ class MainActivity : AppCompatActivity() {
                 }
                 .setNegativeButton("Batal", null)
                 .show()
+        }
+    }
+
+    private fun applyTheme(themeMode: String) {
+        val isSantri = themeMode == SecurityManager.THEME_SANTRI
+
+        if (isSantri) {
+            // Theme Santri Lime (#621EF3, #BDED0F, #EAF7DF, #F62217)
+            binding.rootMainLayout.setBackgroundColor(Color.parseColor("#EAF7DF"))
+
+            binding.btnScanQr.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#621EF3"))
+            binding.btnScanQr.setTextColor(Color.WHITE)
+            binding.btnScanQr.iconTint = ColorStateList.valueOf(Color.WHITE)
+
+            binding.btnCreateExam.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#BDED0F"))
+            binding.btnCreateExam.setTextColor(Color.parseColor("#0F172A"))
+
+            binding.btnEnterUrl.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+            binding.btnEnterUrl.strokeColor = ColorStateList.valueOf(Color.parseColor("#621EF3"))
+            binding.btnEnterUrl.setTextColor(Color.parseColor("#621EF3"))
+
+            binding.btnExitApp.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+            binding.btnExitApp.strokeColor = ColorStateList.valueOf(Color.parseColor("#F62217"))
+            binding.btnExitApp.setTextColor(Color.parseColor("#F62217"))
+
+            binding.viewOperatorUnderline.setBackgroundColor(Color.parseColor("#F62217"))
+
+            // Capsule Indicator
+            binding.btnThemeSantri.setBackgroundResource(R.drawable.bg_primary_button)
+            binding.btnThemeSantri.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#BDED0F"))
+            binding.btnThemeSantri.setTextColor(Color.parseColor("#0F172A"))
+
+            binding.btnThemeClassic.background = null
+            binding.btnThemeClassic.setTextColor(ContextCompat.getColor(this, R.color.text_secondary))
+        } else {
+            // Theme Classic (#4F46E5, #EA580C, #F8FAFC, #DC2626)
+            binding.rootMainLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.background))
+
+            binding.btnScanQr.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.primary))
+            binding.btnScanQr.setTextColor(ContextCompat.getColor(this, R.color.text_on_primary))
+            binding.btnScanQr.iconTint = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_on_primary))
+
+            binding.btnCreateExam.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#EA580C"))
+            binding.btnCreateExam.setTextColor(Color.WHITE)
+
+            binding.btnEnterUrl.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+            binding.btnEnterUrl.strokeColor = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.primary))
+            binding.btnEnterUrl.setTextColor(ContextCompat.getColor(this, R.color.primary))
+
+            binding.btnExitApp.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+            binding.btnExitApp.strokeColor = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.danger))
+            binding.btnExitApp.setTextColor(ContextCompat.getColor(this, R.color.danger))
+
+            binding.viewOperatorUnderline.setBackgroundColor(ContextCompat.getColor(this, R.color.danger))
+
+            // Capsule Indicator
+            binding.btnThemeClassic.setBackgroundResource(R.drawable.bg_primary_button)
+            binding.btnThemeClassic.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.primary))
+            binding.btnThemeClassic.setTextColor(Color.WHITE)
+
+            binding.btnThemeSantri.background = null
+            binding.btnThemeSantri.setTextColor(ContextCompat.getColor(this, R.color.text_secondary))
         }
     }
 

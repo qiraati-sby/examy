@@ -38,8 +38,12 @@ jobs:
       - name: Prepare Direct APK Binaries
         run: |
           mkdir -p dist
-          # Copy debug APK as the ready-to-install Examy.apk and Examy-v3.apk
-          cp app/build/outputs/apk/debug/*-debug.apk dist/Examy.apk || cp app/build/outputs/apk/debug/*.apk dist/Examy.apk
+          # Prioritize the signed, minified release APK for smaller size
+          if ls app/build/outputs/apk/release/*.apk 1> /dev/null 2>&1; then
+            cp app/build/outputs/apk/release/*.apk dist/Examy.apk
+          else
+            cp app/build/outputs/apk/debug/*-debug.apk dist/Examy.apk || cp app/build/outputs/apk/debug/*.apk dist/Examy.apk
+          fi
           cp dist/Examy.apk dist/Examy-v3.apk
 
       - name: Upload Debug APK Artifact
@@ -73,10 +77,11 @@ jobs:
             ---
             
             #### 🌟 Fitur & Pembaruan Versi 3:
-            1. **Operator Santri Branding**: Identitas resmi di beranda bawah tengah (Operator hitam, Santri hijau, garis bawah merah).
-            2. **Jadwal & Waktu Terpadu**: Tanggal Mulai dan Tanggal Selesai menyatu dengan Jam Mulai dan Jam Selesai (*DatePicker & TimePicker*).
-            3. **Riwayat Sesi Ujian Otomatis**: Setiap generate sesi ujian tersimpan di menu riwayat, bisa dibuka ulang QR-nya, disalin tokennya, atau dimuat kembali ke formulir.
-            4. **Menu & Tombol Berlabel Jelas**: Semua tombol (Pengaturan, Kembali, Keluar, Coba Lagi) memiliki label teks informatif, tidak ada tombol atau menu kosong.
-            5. **Pembersihan Bersih**: Repositori dibersihkan sepenuhnya dari berkas sementara.
+            1. **Pilihan Tema Warna (Theme Switcher)**: Menu kapsul ganti tema instan di halaman utama antara **Tema Klasik** (Indigo & Orange) dan **Tema Santri Lime** (Violet & Neon Lime) yang sejuk di mata.
+            2. **Desain Beranda Presisi**: Layout terpusat simetris dan ergonomis mengikuti standar kiosk modern.
+            3. **Operator Santri Branding**: Identitas resmi di beranda bawah tengah (Operator hitam, Santri hijau, garis bawah merah).
+            4. **Jadwal & Waktu Terpadu**: Tanggal Mulai dan Tanggal Selesai menyatu dengan Jam Mulai dan Jam Selesai (*DatePicker & TimePicker*).
+            5. **Riwayat Sesi Ujian Otomatis**: Setiap generate sesi ujian tersimpan di menu riwayat, bisa dibuka ulang QR-nya, disalin tokennya, atau dimuat kembali ke formulir.
+            6. **Optimasi Ukuran Berkas**: Pembersihan berkas tidak terpakai dan kompresi rilis untuk ukuran download yang lebih ringan.
           files: dist/*
           generate_release_notes: false
