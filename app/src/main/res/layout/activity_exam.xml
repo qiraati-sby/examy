@@ -85,21 +85,33 @@
         </LinearLayout>
 
         <!-- Exit / Finish Exam Button -->
-        <FrameLayout
+        <LinearLayout
             android:id="@+id/btnProctorUnlock"
-            android:layout_width="32dp"
+            android:layout_width="wrap_content"
             android:layout_height="32dp"
             android:background="@drawable/bg_secondary_button"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingEnd="10dp">
 
             <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="center"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:contentDescription="@string/dialog_exit_title"
                 android:src="@drawable/ic_lock" />
-        </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Keluar"
+                android:textColor="@color/danger"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
 
     <!-- Non-destructive Offline Alert Banner (Does NOT wipe form input!) -->
@@ -148,14 +160,18 @@
                 android:textSize="11sp" />
         </LinearLayout>
 
-        <ImageButton
+        <Button
             android:id="@+id/btnRetryOffline"
-            android:layout_width="36dp"
+            android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:background="@drawable/bg_secondary_button"
-            android:contentDescription="@string/btn_retry_connection"
-            android:padding="6dp"
-            android:src="@drawable/ic_refresh" />
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:text="Coba Lagi"
+            android:textAllCaps="false"
+            android:textColor="@color/primary"
+            android:textSize="12sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <!-- Grace Period Countdown Overlay (Zero False Positives: Gives student 5s to return) -->
@@ -282,7 +298,7 @@
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/bg_input_field"
                 android:gravity="center"
-                android:hint="••••"
+                android:hint="â€¢â€¢â€¢â€¢"
                 android:importantForAutofill="no"
                 android:inputType="numberPassword"
                 android:letterSpacing="0.2"
