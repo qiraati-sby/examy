@@ -14,115 +14,77 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingStart="20dp"
-            android:paddingTop="16dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="16dp">
+            android:paddingStart="24dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="20dp">
 
-            <!-- Top Bar: Logo, Title, and Settings Button -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
-                        android:layout_marginEnd="10dp"
-                        android:contentDescription="Examy OS Logo"
-                        android:src="@mipmap/ic_launcher" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/app_name"
-                            android:textColor="@color/primary"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/app_tagline"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Settings Button with Icon & Label -->
-                <LinearLayout
-                    android:id="@+id/btnSettings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/bg_secondary_button"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="12dp">
-
-                    <ImageView
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:contentDescription="@string/title_settings"
-                        android:src="@drawable/ic_settings" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:text="Pengaturan"
-                        android:textColor="@color/text_primary"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </RelativeLayout>
-
-            <!-- Middle Container: Vertically Centered with Precision -->
+            <!-- Middle Section: Perfectly Centered Content -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:orientation="vertical">
 
-                <!-- Volume Requirement Indicator Card -->
+                <!-- Centered Logo -->
+                <ImageView
+                    android:id="@+id/ivMainLogo"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginBottom="16dp"
+                    android:contentDescription="Examy OS Logo"
+                    android:src="@mipmap/ic_launcher" />
+
+                <!-- Title: Selamat Datang -->
+                <TextView
+                    android:id="@+id/tvWelcomeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:text="Selamat Datang"
+                    android:textColor="@color/text_primary"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <!-- Subtitle: Guidance notice -->
+                <TextView
+                    android:id="@+id/tvWelcomeSubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="2dp"
+                    android:text="Pastikan koneksi internet stabil dan gunakan aplikasi dengan bijak selama ujian berlangsung."
+                    android:textAlignment="center"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+
+                <!-- Sleek Volume Status Bar -->
                 <LinearLayout
                     android:id="@+id/cardVolumeStatus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
+                    android:layout_marginBottom="20dp"
                     android:background="@drawable/bg_secondary_button"
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:padding="12dp">
+                    android:paddingStart="14dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="14dp"
+                    android:paddingBottom="10dp">
 
                     <ImageView
                         android:id="@+id/ivVolumeIndicator"
-                        android:layout_width="34dp"
-                        android:layout_height="34dp"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
                         android:background="@drawable/bg_card"
                         android:contentDescription="Volume"
-                        android:padding="7dp"
+                        android:padding="6dp"
                         android:src="@drawable/ic_volume" />
 
                     <LinearLayout
@@ -138,7 +100,7 @@
                             android:layout_height="wrap_content"
                             android:text="Volume HP: Memeriksa..."
                             android:textColor="@color/text_primary"
-                            android:textSize="13sp"
+                            android:textSize="12sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -147,13 +109,13 @@
                             android:layout_height="wrap_content"
                             android:text="Wajib minimal 80% sebelum dapat memulai ujian"
                             android:textColor="@color/text_secondary"
-                            android:textSize="11sp" />
+                            android:textSize="10sp" />
                     </LinearLayout>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnAdjustVolume"
                         android:layout_width="wrap_content"
-                        android:layout_height="36dp"
+                        android:layout_height="34dp"
                         android:text="Atur 80%"
                         android:textAllCaps="false"
                         android:textColor="@color/text_on_primary"
@@ -163,228 +125,78 @@
                         app:cornerRadius="8dp" />
                 </LinearLayout>
 
-                <!-- Card 1: Scan QR Code (Fastest way for students) -->
-                <LinearLayout
-                    android:id="@+id/cardScanQr"
+                <!-- Button 1: Pindai QR Code (Solid Primary Indigo) -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnScanQr"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="52dp"
                     android:layout_marginBottom="12dp"
-                    android:background="@drawable/bg_secondary_button"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="16dp">
+                    android:text="Pindai QR Code"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_on_primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="@color/primary"
+                    app:cornerRadius="12dp"
+                    app:icon="@drawable/ic_scan_qr"
+                    app:iconGravity="textStart"
+                    app:iconPadding="10dp"
+                    app:iconSize="20dp"
+                    app:iconTint="@color/text_on_primary" />
 
-                    <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
-                        android:background="@drawable/bg_card"
-                        android:contentDescription="@string/btn_scan_qr"
-                        android:padding="9dp"
-                        android:src="@drawable/ic_scan_qr" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/btn_scan_qr"
-                            android:textColor="@color/primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Pindai barcode/QR dari pengawas untuk masuk ujian otomatis"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Card: Create / Configure Exam (Teacher / Proctor Mode) -->
-                <LinearLayout
-                    android:id="@+id/cardCreateExam"
+                <!-- Button 2: + Buat Ujian (Solid Warm Orange) -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCreateExam"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="52dp"
                     android:layout_marginBottom="12dp"
-                    android:background="@drawable/bg_secondary_button"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="16dp">
+                    android:text="+ Buat Ujian"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_on_primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="#EA580C"
+                    app:cornerRadius="12dp" />
 
-                    <ImageView
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
-                        android:background="@drawable/bg_card"
-                        android:contentDescription="Buat Sesi Ujian"
-                        android:padding="9dp"
-                        android:src="@drawable/ic_create_exam" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="14dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/menu_create_exam_title"
-                            android:textColor="@color/primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/menu_create_exam_desc"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Card 2: Manual URL Input with Paste Button -->
-                <LinearLayout
+                <!-- Button 3: Input URL Ujian (Outlined Indigo) -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEnterUrl"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="52dp"
                     android:layout_marginBottom="12dp"
-                    android:background="@drawable/bg_card"
-                    android:orientation="vertical"
-                    android:padding="18dp">
+                    android:text="Input URL Ujian"
+                    android:textAllCaps="false"
+                    android:textColor="@color/primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="#FFFFFF"
+                    app:cornerRadius="12dp"
+                    app:strokeColor="@color/primary"
+                    app:strokeWidth="1.5dp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="3dp"
-                        android:text="Alamat Server / URL Ujian"
-                        android:textColor="@color/text_primary"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="Ketik atau tempelkan link ujian Google Form atau server LAN"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="11sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <EditText
-                            android:id="@+id/etExamUrl"
-                            android:layout_width="0dp"
-                            android:layout_height="48dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_input_field"
-                            android:hint="@string/hint_exam_url"
-                            android:imeOptions="actionGo"
-                            android:importantForAutofill="no"
-                            android:inputType="textUri"
-                            android:paddingStart="14dp"
-                            android:paddingEnd="14dp"
-                            android:textColor="@color/text_primary"
-                            android:textColorHint="@color/text_muted"
-                            android:textSize="13sp" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnPasteUrlMain"
-                            android:layout_width="wrap_content"
-                            android:layout_height="48dp"
-                            android:layout_marginStart="8dp"
-                            android:text="Tempel"
-                            android:textAllCaps="false"
-                            android:textColor="@color/primary"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            app:backgroundTint="#EEF2FF"
-                            app:cornerRadius="8dp"
-                            app:strokeColor="@color/primary"
-                            app:strokeWidth="1.2dp" />
-                    </LinearLayout>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnStartExam"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:text="@string/btn_start_exam"
-                        android:textAllCaps="false"
-                        android:textColor="@color/text_on_primary"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:backgroundTint="@color/primary"
-                        app:cornerRadius="10dp" />
-                </LinearLayout>
-
-                <!-- Quick Access / Recent URLs section -->
-                <LinearLayout
-                    android:id="@+id/layoutRecentSection"
+                <!-- Button 4: Tutup Aplikasi (Outlined Danger Red) -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnExitApp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone"
-                    tools:visibility="visible">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="6dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:text="@string/section_quick_access"
-                            android:textColor="@color/text_primary"
-                            android:textSize="13sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/btnClearHistory"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:padding="4dp"
-                            android:text="@string/btn_clear_history"
-                            android:textColor="@color/danger"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
-
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/chipGroupRecent"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:singleSelection="true" />
-                </LinearLayout>
+                    android:layout_height="52dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Tutup Aplikasi"
+                    android:textAllCaps="false"
+                    android:textColor="@color/danger"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:backgroundTint="#FFFFFF"
+                    app:cornerRadius="12dp"
+                    app:strokeColor="@color/danger"
+                    app:strokeWidth="1.5dp" />
 
             </LinearLayout>
 
-            <!-- Bottom Section: Security Badge and Operator Santri Branding -->
+            <!-- Bottom Section: Security Badge, Operator Santri Branding, and Version -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="12dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -393,12 +205,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="4dp">
+                    android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
                         android:contentDescription="Security"
                         android:src="@drawable/ic_lock" />
 
@@ -408,7 +219,7 @@
                         android:layout_marginStart="6dp"
                         android:text="Kiosk LockTask | Screen Shield | Resilient Network"
                         android:textColor="@color/text_muted"
-                        android:textSize="11sp" />
+                        android:textSize="10sp" />
                 </LinearLayout>
 
                 <!-- Operator Santri Branding -->
@@ -429,7 +240,7 @@
                             android:layout_height="wrap_content"
                             android:text="Operator "
                             android:textColor="#000000"
-                            android:textSize="16sp"
+                            android:textSize="15sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -437,7 +248,7 @@
                             android:layout_height="wrap_content"
                             android:text="Santri"
                             android:textColor="#047857"
-                            android:textSize="16sp"
+                            android:textSize="15sp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -448,6 +259,15 @@
                         android:layout_marginTop="3dp"
                         android:background="#DC2626" />
                 </LinearLayout>
+
+                <!-- Version Label (Matching Version 2.5 in reference) -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Versi 3"
+                    android:textColor="@color/text_muted"
+                    android:textSize="10sp" />
             </LinearLayout>
 
         </LinearLayout>

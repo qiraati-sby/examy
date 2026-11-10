@@ -3,7 +3,6 @@ package com.examy.app
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,7 +27,6 @@ class MainActivity : AppCompatActivity() {
     private val barcodeLauncher = registerForActivityResult(ScanContract()) { result ->
         if (result.contents != null) {
             val scannedContent = result.contents.trim()
-            binding.etExamUrl.setText(scannedContent)
             processExamEntry(scannedContent)
         }
     }
@@ -39,13 +37,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupUI()
-        loadRecentUrls()
         updateVolumeIndicator()
     }
 
     override fun onResume() {
         super.onResume()
-        loadRecentUrls()
         updateVolumeIndicator()
     }
 
@@ -62,8 +58,8 @@ class MainActivity : AppCompatActivity() {
             updateVolumeIndicator()
         }
 
-        // Scan QR Card click
-        binding.cardScanQr.setOnClickListener {
+        // Button 1: Pindai QR Code
+        binding.btnScanQr.setOnClickListener {
             val options = ScanOptions().apply {
                 setPrompt("Arahkan kamera ke QR Code ujian dari pengawas")
                 setBeepEnabled(true)
@@ -73,47 +69,26 @@ class MainActivity : AppCompatActivity() {
             barcodeLauncher.launch(options)
         }
 
-        // Teacher Menu: Create & Configure Exam
-        binding.cardCreateExam.setOnClickListener {
+        // Button 2: + Buat Ujian (Teacher Exam Creator)
+        binding.btnCreateExam.setOnClickListener {
             startActivity(Intent(this, CreateExamActivity::class.java))
         }
 
-        // Paste URL from Clipboard
-        binding.btnPasteUrlMain.setOnClickListener {
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = clipboard.primaryClip
-            if (clip != null && clip.itemCount > 0) {
-                val pasteData = clip.getItemAt(0).text?.toString()?.trim()
-                if (!pasteData.isNullOrEmpty()) {
-                    binding.etExamUrl.setText(pasteData)
-                    Toast.makeText(this, "Tautan berhasil ditempel dari clipboard!", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "Clipboard kosong atau bukan teks", Toast.LENGTH_SHORT).show()
+        // Button 3: Input URL Ujian
+        binding.btnEnterUrl.setOnClickListener {
+            showUrlInputDialog()
+        }
+
+        // Button 4: Tutup Aplikasi
+        binding.btnExitApp.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("Tutup Aplikasi?")
+                .setMessage("Apakah Anda yakin ingin keluar dari aplikasi Examy?")
+                .setPositiveButton("Keluar") { _, _ ->
+                    finishAffinity()
                 }
-            } else {
-                Toast.makeText(this, "Clipboard kosong", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        // Start Exam Button click
-        binding.btnStartExam.setOnClickListener {
-            val rawInput = binding.etExamUrl.text.toString().trim()
-            if (rawInput.isBlank()) {
-                Toast.makeText(this, "Masukkan URL atau scan QR ujian terlebih dahulu", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            processExamEntry(rawInput)
-        }
-
-        // Settings Button (Teacher / Proctor PIN settings)
-        binding.btnSettings.setOnClickListener {
-            showSettingsDialog()
-        }
-
-        // Clear History
-        binding.btnClearHistory.setOnClickListener {
-            SecurityManager.clearRecentUrls(this)
-            loadRecentUrls()
+                .setNegativeButton("Batal", null)
+                .show()
         }
     }
 
@@ -130,6 +105,74 @@ class MainActivity : AppCompatActivity() {
             binding.tvVolumePercentTitle.setTextColor(ContextCompat.getColor(this, R.color.danger))
             binding.btnAdjustVolume.visibility = View.VISIBLE
         }
+    }
+
+    private fun showUrlInputDialog() {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_input_url, null)
+        val etUrl = dialogView.findViewById<EditText>(R.id.etDialogExamUrl)
+        val btnPaste = dialogView.findViewById<Button>(R.id.btnDialogPasteUrl)
+        val layoutRecent = dialogView.findViewById<View>(R.id.layoutDialogRecent)
+        val chipGroupRecent = dialogView.findViewById<com.google.android.material.chip.ChipGroup>(R.id.chipGroupDialogRecent)
+        val btnCancel = dialogView.findViewById<Button>(R.id.btnCancelUrlDialog)
+        val btnSubmit = dialogView.findViewById<Button>(R.id.btnSubmitUrlDialog)
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(true)
+            .create()
+
+        // Paste functionality
+        btnPaste.setOnClickListener {
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip = clipboard.primaryClip
+            if (clip != null && clip.itemCount > 0) {
+                val pasteData = clip.getItemAt(0).text?.toString()?.trim()
+                if (!pasteData.isNullOrEmpty()) {
+                    etUrl.setText(pasteData)
+                    Toast.makeText(this, "Tautan berhasil ditempel!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Clipboard kosong atau bukan teks", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "Clipboard kosong", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // Load recent URLs if any
+        val recents = SecurityManager.getRecentUrls(this)
+        if (recents.isNotEmpty()) {
+            layoutRecent.visibility = View.VISIBLE
+            chipGroupRecent.removeAllViews()
+            for (url in recents) {
+                val chip = Chip(this).apply {
+                    text = url
+                    isCheckable = false
+                    isClickable = true
+                    setOnClickListener {
+                        etUrl.setText(url)
+                    }
+                }
+                chipGroupRecent.addView(chip)
+            }
+        } else {
+            layoutRecent.visibility = View.GONE
+        }
+
+        btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        btnSubmit.setOnClickListener {
+            val rawInput = etUrl.text.toString().trim()
+            if (rawInput.isBlank()) {
+                Toast.makeText(this, "Masukkan URL atau link ujian terlebih dahulu", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            dialog.dismiss()
+            processExamEntry(rawInput)
+        }
+
+        dialog.show()
     }
 
     /**
@@ -248,59 +291,5 @@ class MainActivity : AppCompatActivity() {
         } catch (_: Exception) {
             false
         }
-    }
-
-    private fun loadRecentUrls() {
-        val recents = SecurityManager.getRecentUrls(this)
-        binding.chipGroupRecent.removeAllViews()
-
-        if (recents.isEmpty()) {
-            binding.layoutRecentSection.visibility = View.GONE
-        } else {
-            binding.layoutRecentSection.visibility = View.VISIBLE
-            for (url in recents) {
-                val chip = Chip(this).apply {
-                    text = url
-                    isCheckable = false
-                    isClickable = true
-                    setOnClickListener {
-                        binding.etExamUrl.setText(url)
-                    }
-                }
-                binding.chipGroupRecent.addView(chip)
-            }
-        }
-    }
-
-    private fun showSettingsDialog() {
-        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_settings, null)
-        val etNewPin = dialogView.findViewById<EditText>(R.id.etNewPin)
-        val btnCancel = dialogView.findViewById<Button>(R.id.btnCancelSettings)
-        val btnSave = dialogView.findViewById<Button>(R.id.btnSaveSettings)
-
-        val currentPin = SecurityManager.getProctorPin(this)
-        etNewPin.setText(currentPin)
-
-        val dialog = AlertDialog.Builder(this)
-            .setView(dialogView)
-            .setCancelable(true)
-            .create()
-
-        btnCancel.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        btnSave.setOnClickListener {
-            val newPin = etNewPin.text.toString().trim()
-            if (newPin.length < 4) {
-                Toast.makeText(this, "PIN harus minimal 4 angka", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            SecurityManager.setProctorPin(this, newPin)
-            Toast.makeText(this, getString(R.string.toast_pin_saved), Toast.LENGTH_SHORT).show()
-            dialog.dismiss()
-        }
-
-        dialog.show()
     }
 }
