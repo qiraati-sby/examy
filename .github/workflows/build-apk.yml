@@ -38,9 +38,10 @@ jobs:
       - name: Prepare Direct APK Binaries
         run: |
           mkdir -p dist
-          # Copy debug APK as the primary ready-to-install Examy.apk
+          # Copy debug APK as the primary ready-to-install Examy.apk and Examy-v3.apk
           cp app/build/outputs/apk/debug/*-debug.apk dist/Examy.apk || cp app/build/outputs/apk/debug/*.apk dist/Examy.apk
-          cp app/build/outputs/apk/debug/*-debug.apk dist/Examy-Debug.apk || cp app/build/outputs/apk/debug/*.apk dist/Examy-Debug.apk
+          cp dist/Examy.apk dist/Examy-v3.apk
+          cp dist/Examy.apk dist/Examy-Debug.apk
           if ls app/build/outputs/apk/release/*.apk 1> /dev/null 2>&1; then
             cp app/build/outputs/apk/release/*.apk dist/Examy-Release-unsigned.apk
           fi
@@ -59,27 +60,27 @@ jobs:
           path: app/build/outputs/apk/release/*.apk
           retention-days: 14
 
-      - name: Publish Direct APK to GitHub Releases (No ZIP)
+      - name: Publish Direct APK to GitHub Releases (Versi 3)
         if: github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.1
-          name: "Examy v1.0.1 (Menu Guru & Volume 80%)"
+          tag_name: v1.0.2
+          name: "Examy v1.0.2 - Operator Santri (Versi 3)"
           body: |
-            ### ðŸ“± Unduh Langsung Examy APK (Tanpa ZIP)
+            ### ðŸ“± Unduh Langsung Examy APK Versi 3 (Tanpa ZIP)
             
-            Klik link di bawah ini langsung dari HP Android untuk mengunduh dan menginstal aplikasi secara instan:
+            Versi terbaru dengan jadwal tanggal & jam terpadu, riwayat sesi ujian, perbaikan teks menu lengkap, dan identitas resmi **Operator Santri**:
             
-            - ðŸ“¥ **[Unduh Examy.apk Langsung](https://github.com/qiraati-sby/examy/releases/download/v1.0.1/Examy.apk)**
+            - ðŸ“¥ **[Unduh Examy-v3.apk Langsung](https://github.com/qiraati-sby/examy/releases/download/v1.0.2/Examy-v3.apk)**
+            - ðŸ“¥ **[Unduh Examy.apk (Rilis Utama)](https://github.com/qiraati-sby/examy/releases/download/v1.0.2/Examy.apk)**
             
             ---
             
-            #### ðŸŒŸ Fitur Baru di Versi Ini:
-            - **Menu Guru (Exam Creator)**: Input mapel, link Google Form/LAN, jadwal, durasi, dan generator token/QR Code instan.
-            - **Syarat Volume Minimal 80%**: Memastikan HP tidak di-mute sebelum dan selama ujian.
-            - **Sistem Tiga Lapis PIN**: PIN Siswa (mulai), PIN Pengawas (matikan sirene), dan PIN Keluar (selesai normal).
-            - **Sirene Alarm Pelanggaran**: Alarm keras dan getar jika siswa berpindah aplikasi lebih dari 5 detik.
-            - **Kiosk Lockdown & Anti-Contek**: Seleksi teks diblokir, screenshot dinonaktifkan (`FLAG_SECURE`).
-            - **Resilient LAN Error UI**: Jawaban form tidak hilang saat koneksi Wi-Fi terputus sesaat.
+            #### ðŸŒŸ Fitur & Pembaruan Versi 3:
+            1. **Operator Santri Branding**: Identitas resmi di beranda bawah tengah (Operator hitam, Santri hijau, garis bawah merah).
+            2. **Jadwal & Waktu Terpadu**: Tanggal Mulai dan Tanggal Selesai menyatu dengan Jam Mulai dan Jam Selesai (*DatePicker & TimePicker*).
+            3. **Riwayat Sesi Ujian Otomatis**: Setiap generate sesi ujian tersimpan di menu riwayat, bisa dibuka ulang QR-nya, disalin tokennya, atau dimuat kembali ke formulir.
+            4. **Menu & Tombol Berlabel Jelas**: Semua tombol (Pengaturan, Kembali, Keluar, Coba Lagi) memiliki label teks informatif, tidak ada tombol atau menu kosong.
+            5. **Pembersihan Bersih**: Repositori dibersihkan sepenuhnya dari berkas sementara.
           files: dist/*
           generate_release_notes: false
