@@ -3,7 +3,7 @@
 [![Download APK](https://img.shields.io/badge/Download-Examy.apk-047857?style=for-the-badge&logo=android&logoColor=white)](https://github.com/qiraati-sby/examy/releases/download/v1.0.1/Examy.apk)
 [![Release Version](https://img.shields.io/github/v/release/qiraati-sby/examy?style=for-the-badge&color=blue)](https://github.com/qiraati-sby/examy/releases/latest)
 
-ðŸ“¥ **[Unduh File Examy.apk Langsung (Versi 2 - Menu Guru)](https://github.com/qiraati-sby/examy/releases/download/v1.0.1/Examy.apk)**  
+ðŸ“¥ **[Unduh File Examy.apk Langsung (Versi Terbaru)](https://github.com/qiraati-sby/examy/releases/download/v1.0.1/Examy.apk)**  
 ðŸŒ **[Halaman Rilis Publik](https://github.com/qiraati-sby/examy/releases/latest)**
 
 ---
@@ -16,7 +16,8 @@
 
 | Fitur | Aplikasi Konvensional | **Examy (Aplikasi Ini)** |
 | :--- | :--- | :--- |
-| **Menu Konfigurasi Ujian (Guru)** | Tidak ada / harus lewat web admin rumit | **Menu Buat Ujian Bawaan**: Input mapel, link Google Form/LAN, jadwal, durasi, dan generate token/QR |
+| **Menu Konfigurasi Ujian (Guru)** | Tidak ada / harus lewat web admin rumit | **Menu Buat Ujian Bawaan**: Input mapel, link Google Form/LAN, jadwal terintegrasi (tanggal & jam mulai-selesai), durasi, dan generate token/QR |
+| **Riwayat Sesi Ujian** | Hilang setelah keluar aplikasi | **Riwayat Generate Ujian**: Tersimpan otomatis, bisa dibuka ulang QR-nya, disalin tokennya, atau dipakai lagi ke formulir |
 | **Sistem Tiga Lapis PIN** | Hanya 1 PIN statis | **PIN Siswa** (mulai), **PIN Pengawas** (buka pelanggaran & sirene), dan **PIN Keluar** (selesai normal) |
 | **Penegakan Volume Minimal 80%** | Tidak ada pengawasan volume | **Syarat Volume Wajib &gt;= 80%**: Aplikasi tidak dapat dimulai dan tidak dapat jalan jika volume &lt; 80% |
 | **Sirene Alarm Pelanggaran** | Hanya pesan toast atau langsung close | **Sirene Alarm Kencang + Getar**: Otomatis berbunyi nyaring di HP siswa jika melanggar sampai dibuka PIN Pengawas |
@@ -25,6 +26,7 @@
 | **Ketahanan Jaringan LAN** | Halaman hilang / error saat Wi-Fi drop sesaat | **Resilient Non-Destructive Error UI**: Isian formulir siswa tidak terhapus |
 | **Penyalinan Jawaban** | Teks soal sering masih bisa diblok | **Injeksi Anti-Copy & Anti-ContextMenu**: Seleksi teks dan klik kanan diblokir otomatis |
 | **Input Fleksibel** | Manual ketik URL | **Scanner QR Code bawaan (ZXing)** + Token Generator instan |
+| **Identitas & Branding** | Polos | Dilengkapi branding resmi **Operator Santri** di beranda aplikasi |
 
 ---
 
@@ -39,15 +41,16 @@
    - **PIN Utama Siswa** (PIN yang harus dimasukkan siswa di awal sebelum soal terbuka)
    - **PIN Pengawas / Pelanggaran** (PIN rahasia pengawas untuk mematikan sirene jika siswa melanggar)
    - **PIN Keluar** (PIN yang dimasukkan ketika siswa sudah selesai dan izin keluar)
-   - **Waktu Mulai & Waktu Selesai** (Dilengkapi *TimePicker* interaktif)
+   - **Jadwal & Waktu Terpadu** (Dilengkapi *DatePicker* untuk Tanggal Mulai & Tanggal Selesai, serta *TimePicker* untuk Jam Mulai & Jam Selesai)
    - **Durasi Pengerjaan** (Dalam hitungan menit, misal 90 menit)
 4. Ketuk tombol **"Generate Token & QR Code"**.
 5. Sistem akan membuat QR Code dan kode token ujian yang dapat disalin atau dibagikan ke siswa atau proyektor ruangan!
+6. Setiap sesi ujian yang dibuat akan tersimpan di daftar **"4. Riwayat Sesi Ujian yang Dibuat"** sehingga guru dapat membuka kembali barcode QR atau memakai ulang data jadwal kapan saja.
 
 ### B. Untuk Siswa (Mengerjakan Ujian)
 1. Siswa memastikan volume HP minimal **80%**. Jika kurang dari 80%, aplikasi menampilkan dialog peringatan dan mewajibkan volume dinaikkan.
 2. Siswa memindai QR Code pengawas atau menempelkan Token / URL ujian.
-3. Aplikasi menampilkan ringkasan ujian (Nama mapel, durasi, status volume) dan meminta **PIN Siswa**.
+3. Aplikasi menampilkan ringkasan ujian (Nama mapel, jadwal tanggal & jam, durasi, status volume) dan meminta **PIN Siswa**.
 4. Masukkan PIN Siswa dan ketuk **Mulai Ujian**. Layar akan terkunci penuh (*fullscreen kiosk mode*).
 
 ### C. Penanganan Pelanggaran (Siren Alarm)
@@ -58,7 +61,7 @@
   4. Sirene alarm hanya dapat dimatikan jika Pengawas Ruangan memasukkan **PIN Pengawas**.
 
 ### D. Mengakhiri Ujian Secara Sah
-- Setelah siswa selesai mengirim jawaban formulir ujian, siswa atau pengawas mengetuk ikon gembok di kanan atas atau menekan tombol kembali.
+- Setelah siswa selesai mengirim jawaban formulir ujian, siswa atau pengawas mengetuk tombol **"Keluar"** di kanan atas atau menekan tombol kembali.
 - Masukkan **PIN Keluar** untuk menutup sesi ujian secara bersih.
 
 ---
@@ -75,15 +78,15 @@ Examy/
 â”‚   â”œâ”€â”€ src/main/
 â”‚   â”‚   â”œâ”€â”€ AndroidManifest.xml      # Izin kamera, audio settings, vibrator, kiosk
 â”‚   â”‚   â”œâ”€â”€ java/com/examy/app/
-â”‚   â”‚   â”‚   â”œâ”€â”€ MainActivity.kt      # Halaman utama, validasi volume 80%, QR scan, token input
-â”‚   â”‚   â”‚   â”œâ”€â”€ CreateExamActivity.kt# Menu guru konfigurasi ujian & generator token/QR
-â”‚   â”‚   â”‚   â”œâ”€â”€ ExamActivity.kt      # Layar ujian terkunci, hitung mundur, alarm sirene, PIN keluar
+â”‚   â”‚   â”‚   â”œâ”€â”€ MainActivity.kt      # Halaman utama, branding Operator Santri, validasi volume 80%, QR scan
+â”‚   â”‚   â”‚   â”œâ”€â”€ CreateExamActivity.kt# Menu guru konfigurasi ujian (Tanggal/Jam terpadu, Riwayat generate, QR)
+â”‚   â”‚   â”‚   â”œâ”€â”€ ExamActivity.kt      # Layar ujian terkunci, hitung mundur, alarm sirene, tombol keluar jelas
 â”‚   â”‚   â”‚   â”œâ”€â”€ ExamConfig.kt        # Model data konfigurasi ujian & enkoder token Base64
 â”‚   â”‚   â”‚   â”œâ”€â”€ VolumeManager.kt     # Pengawas volume perangkat (wajib minimal 80%)
 â”‚   â”‚   â”‚   â”œâ”€â”€ AlarmSoundManager.kt # Pengelola bunyi sirene alarm keras & getar berkelanjutan
 â”‚   â”‚   â”‚   â”œâ”€â”€ ExamWebViewClient.kt # Whitelist domain, anti-copy script, resilient error handler
-â”‚   â”‚   â”‚   â””â”€â”€ SecurityManager.kt   # Logika Kiosk, FLAG_SECURE, & verifikasi 3-lapis PIN
-â”‚   â”‚   â””â”€â”€ res/                     # Layout XML, dialog, icon, warna, & string multibahasa
+â”‚   â”‚   â”‚   â””â”€â”€ SecurityManager.kt   # Logika Kiosk, SharedPreferences riwayat ujian, & verifikasi 3-lapis PIN
+â”‚   â”‚   â””â”€â”€ res/                     # Layout XML, dialog, item riwayat, icon, warna, & string multibahasa
 â”œâ”€â”€ replica/                         # Catatan audit Clean-Room & matriks fitur lengkap
 â””â”€â”€ README.md
 ```
