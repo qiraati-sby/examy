@@ -15,10 +15,13 @@ data class ExamConfig(
     val studentPin: String = "",
     val proctorPin: String = "1234",
     val exitPin: String = "1234",
+    val startDate: String = "",
     val startTime: String = "",
+    val endDate: String = "",
     val endTime: String = "",
     val durationMinutes: Int = 90,
-    val token: String = ""
+    val token: String = "",
+    val createdAt: Long = System.currentTimeMillis()
 ) : Serializable {
 
     fun toJson(): String {
@@ -28,11 +31,31 @@ data class ExamConfig(
         obj.put("student_pin", studentPin)
         obj.put("proctor_pin", proctorPin)
         obj.put("exit_pin", exitPin)
+        obj.put("start_date", startDate)
         obj.put("start_time", startTime)
+        obj.put("end_date", endDate)
         obj.put("end_time", endTime)
         obj.put("duration", durationMinutes)
         obj.put("token", token)
+        obj.put("created_at", createdAt)
         return obj.toString()
+    }
+
+    /**
+     * Formats combined date, time, and duration for display.
+     */
+    fun getScheduleDisplay(): String {
+        val startParts = listOf(startDate, startTime).filter { it.isNotBlank() }
+        val startStr = startParts.joinToString(" â€¢ ")
+
+        val endParts = listOf(endDate, endTime).filter { it.isNotBlank() }
+        val endStr = endParts.joinToString(" â€¢ ")
+
+        return when {
+            startStr.isNotBlank() && endStr.isNotBlank() -> "$startStr s/d $endStr ($durationMinutes Menit)"
+            startStr.isNotBlank() -> "$startStr ($durationMinutes Menit)"
+            else -> "$durationMinutes Menit"
+        }
     }
 
     /**
@@ -62,10 +85,13 @@ data class ExamConfig(
                     studentPin = obj.optString("student_pin", ""),
                     proctorPin = obj.optString("proctor_pin", "1234"),
                     exitPin = obj.optString("exit_pin", "1234"),
+                    startDate = obj.optString("start_date", ""),
                     startTime = obj.optString("start_time", ""),
+                    endDate = obj.optString("end_date", ""),
                     endTime = obj.optString("end_time", ""),
                     durationMinutes = obj.optInt("duration", 90),
-                    token = obj.optString("token", "")
+                    token = obj.optString("token", ""),
+                    createdAt = obj.optLong("created_at", System.currentTimeMillis())
                 )
             } catch (_: Exception) {
                 null
