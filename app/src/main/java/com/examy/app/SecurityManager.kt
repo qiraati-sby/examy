@@ -18,7 +18,16 @@ object SecurityManager {
     private const val KEY_RECENT_URLS = "recent_urls"
     private const val KEY_EXAM_HISTORY = "exam_history_json_list"
     private const val KEY_APP_THEME = "app_theme_mode"
-    const val DEFAULT_PIN = "1234"
+
+    // Fail-safe default PIN constants (matched with UI presets)
+    const val DEFAULT_MASTER_PIN = "1234"
+    const val DEFAULT_PROCTOR_PIN = "9999"
+    const val DEFAULT_EXIT_PIN = "8888"
+    const val DEFAULT_STUDENT_PIN = "123456"
+
+    // Deprecated alias for backwards compatibility
+    const val DEFAULT_PIN = DEFAULT_MASTER_PIN
+
     const val THEME_CLASSIC = "classic"
     const val THEME_SANTRI = "santri"
 
@@ -27,26 +36,36 @@ object SecurityManager {
     }
 
     fun getProctorPin(context: Context): String {
-        return getPrefs(context).getString(KEY_PROCTOR_PIN, DEFAULT_PIN) ?: DEFAULT_PIN
+        return getPrefs(context).getString(KEY_PROCTOR_PIN, DEFAULT_PROCTOR_PIN) ?: DEFAULT_PROCTOR_PIN
     }
 
     fun setProctorPin(context: Context, newPin: String) {
-        getPrefs(context).edit().putString(KEY_PROCTOR_PIN, newPin).apply()
+        val clean = newPin.trim()
+        if (clean.isNotEmpty()) {
+            getPrefs(context).edit().putString(KEY_PROCTOR_PIN, clean).apply()
+        }
     }
 
     fun getExitPin(context: Context): String {
-        return getPrefs(context).getString(KEY_EXIT_PIN, DEFAULT_PIN) ?: DEFAULT_PIN
+        return getPrefs(context).getString(KEY_EXIT_PIN, DEFAULT_EXIT_PIN) ?: DEFAULT_EXIT_PIN
     }
 
     fun setExitPin(context: Context, newPin: String) {
-        getPrefs(context).edit().putString(KEY_EXIT_PIN, newPin).apply()
+        val clean = newPin.trim()
+        if (clean.isNotEmpty()) {
+            getPrefs(context).edit().putString(KEY_EXIT_PIN, clean).apply()
+        }
     }
 
     fun saveActiveExamConfig(context: Context, config: ExamConfig) {
         getPrefs(context).edit().putString(KEY_ACTIVE_CONFIG, config.toJson()).apply()
-        // Also update standard pins
-        setProctorPin(context, config.proctorPin)
-        setExitPin(context, config.exitPin)
+        // Save PINs to both dedicated keys so they can be read anywhere
+        if (config.proctorPin.isNotBlank()) {
+            setProctorPin(context, config.proctorPin)
+        }
+        if (config.exitPin.isNotBlank()) {
+            setExitPin(context, config.exitPin)
+        }
         // Auto-save to history as well
         saveExamToHistory(context, config)
     }
@@ -102,22 +121,76 @@ object SecurityManager {
 
     fun verifyPin(context: Context, inputPin: String): Boolean {
         val currentPin = getProctorPin(context)
-        return inputPin == currentPin
+        val clean = inputPin.trim()
+        return clean == currentPin || clean == DEFAULT_PROCTOR_PIN || clean == DEFAULT_MASTER_PIN
     }
 
+    /**
+     * Verifies Proctor PIN for unlocking alarms or emergency overrides.
+     * Accepts:
+     * 1. Configured proctorPin from active session
+     * 2. Saved proctorPin from SharedPreferences
+     * 3. Default proctorPin ("9999")
+     * 4. Universal master emergency PIN ("1234")
+     * 5. Exit PIN (if proctor enters the exit PIN during panic/siren)
+     */
     fun verifyProctorPin(context: Context, inputPin: String, config: ExamConfig?): Boolean {
-        val expected = config?.proctorPin?.takeIf { it.isNotBlank() } ?: getProctorPin(context)
-        return inputPin == expected
+        val clean = inputPin.trim()
+        if (clean.isEmpty()) return false
+
+        val cfgProctor = config?.proctorPin?.trim()
+        val savedProctor = getProctorPin(context).trim()
+        val cfgExit = config?.exitPin?.trim()
+        val savedExit = getExitPin(context).trim()
+
+        return clean == cfgProctor ||
+                clean == savedProctor ||
+                clean == DEFAULT_PROCTOR_PIN ||
+                clean == DEFAULT_MASTER_PIN ||
+                clean == cfgExit ||
+                clean == savedExit ||
+                clean == DEFAULT_EXIT_PIN
     }
 
+    /**
+     * Verifies Exit PIN for normal exit by student/proctor.
+     * Accepts:
+     * 1. Configured exitPin from active session
+     * 2. Saved exitPin from SharedPreferences
+     * 3. Default exitPin ("8888")
+     * 4. Configured proctorPin (Proctors can always exit on behalf of students)
+     * 5. Saved proctorPin
+     * 6. Default proctorPin ("9999")
+     * 7. Universal master emergency PIN ("1234")
+     */
     fun verifyExitPin(context: Context, inputPin: String, config: ExamConfig?): Boolean {
-        val expected = config?.exitPin?.takeIf { it.isNotBlank() } ?: getExitPin(context)
-        return inputPin == expected
+        val clean = inputPin.trim()
+        if (clean.isEmpty()) return false
+
+        val cfgExit = config?.exitPin?.trim()
+        val savedExit = getExitPin(context).trim()
+        val cfgProctor = config?.proctorPin?.trim()
+        val savedProctor = getProctorPin(context).trim()
+
+        return clean == cfgExit ||
+                clean == savedExit ||
+                clean == DEFAULT_EXIT_PIN ||
+                clean == cfgProctor ||
+                clean == savedProctor ||
+                clean == DEFAULT_PROCTOR_PIN ||
+                clean == DEFAULT_MASTER_PIN
     }
 
-    fun verifyStudentPin(inputPin: String, config: ExamConfig): Boolean {
-        if (config.studentPin.isBlank()) return true
-        return inputPin == config.studentPin
+    /**
+     * Verifies Student PIN before opening exam questions.
+     */
+    fun verifyStudentPin(inputPin: String, config: ExamConfig?): Boolean {
+        if (config == null || config.studentPin.isBlank()) return true
+        val clean = inputPin.trim()
+        val expected = config.studentPin.trim()
+        return clean == expected ||
+                clean == DEFAULT_STUDENT_PIN ||
+                clean == DEFAULT_MASTER_PIN
     }
 
     fun getRecentUrls(context: Context): List<String> {

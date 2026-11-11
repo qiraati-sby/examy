@@ -258,24 +258,42 @@ class MainActivity : AppCompatActivity() {
      * Processes exam entry with strict volume check and token/PIN verification.
      */
     private fun processExamEntry(input: String) {
+        val trimmedInput = input.trim()
+        if (trimmedInput.isBlank()) return
+
         // Enforce Volume Requirement: App will not run unless volume >= 80%
         VolumeManager.enforceVolumeRequirement(this) {
             updateVolumeIndicator()
 
             // Check if input is a generated Token or JSON config
-            val configFromToken = ExamConfig.fromTokenString(input)
+            val configFromToken = ExamConfig.fromTokenString(trimmedInput)
             val activeConfig = SecurityManager.getActiveExamConfig(this)
+            val historyMatch = SecurityManager.getExamHistory(this).firstOrNull {
+                it.token.equals(trimmedInput, ignoreCase = true)
+            }
 
-            val resolvedConfig = configFromToken ?: if (activeConfig != null && input == activeConfig.token) {
-                activeConfig
-            } else null
+            val resolvedConfig = configFromToken
+                ?: (if (activeConfig != null && trimmedInput.equals(activeConfig.token, ignoreCase = true)) activeConfig else null)
+                ?: historyMatch
 
             if (resolvedConfig != null) {
-                // Exam configuration detected: prompt student for PIN Utama Siswa
+                // Exam configuration detected: persist immediately to device storage
+                SecurityManager.saveActiveExamConfig(this, resolvedConfig)
+                // Prompt student for PIN Utama Siswa
                 showStudentConfirmDialog(resolvedConfig)
             } else {
+                // Check if input resembles a token code (e.g. EXAM-XXXX) but is not found locally
+                if (trimmedInput.startsWith("EXAM-", ignoreCase = true) && !trimmedInput.contains(".")) {
+                    Toast.makeText(
+                        this,
+                        "Kode token '$trimmedInput' belum tersimpan di HP ini. Gunakan tombol 'Pindai QR Code' dari HP pengawas.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    return@enforceVolumeRequirement
+                }
+
                 // Direct URL flow
-                val sanitizedUrl = sanitizeUrl(input)
+                val sanitizedUrl = sanitizeUrl(trimmedInput)
                 if (!isValidUrl(sanitizedUrl)) {
                     Toast.makeText(this, getString(R.string.toast_invalid_url), Toast.LENGTH_SHORT).show()
                     return@enforceVolumeRequirement
@@ -285,6 +303,7 @@ class MainActivity : AppCompatActivity() {
                 if (activeConfig != null && (sanitizedUrl == activeConfig.examUrl || activeConfig.examUrl.contains(sanitizedUrl))) {
                     showStudentConfirmDialog(activeConfig)
                 } else {
+                    // Direct exam launch with fallback default proctor and exit PINs
                     launchDirectExam(sanitizedUrl, null)
                 }
             }
@@ -329,6 +348,8 @@ class MainActivity : AppCompatActivity() {
             val inputPin = etPin.text.toString().trim()
             if (SecurityManager.verifyStudentPin(inputPin, config)) {
                 dialog.dismiss()
+                // Persist verified session on device
+                SecurityManager.saveActiveExamConfig(this, config)
                 launchDirectExam(config.examUrl, config)
             } else {
                 tvPinError.visibility = View.VISIBLE
@@ -342,11 +363,22 @@ class MainActivity : AppCompatActivity() {
     private fun launchDirectExam(sanitizedUrl: String, config: ExamConfig?) {
         SecurityManager.addRecentUrl(this, sanitizedUrl)
 
+        // Ensure active config or default pins are saved locally
+        if (config != null) {
+            SecurityManager.saveActiveExamConfig(this, config)
+        }
+
+        val proctorPin = config?.proctorPin ?: SecurityManager.getProctorPin(this)
+        val exitPin = config?.exitPin ?: SecurityManager.getExitPin(this)
+
         val intent = Intent(this, ExamActivity::class.java).apply {
             putExtra(ExamActivity.EXTRA_EXAM_URL, sanitizedUrl)
             if (config != null) {
                 putExtra(ExamActivity.EXTRA_EXAM_CONFIG, config)
+                putExtra(ExamConfig.EXTRA_EXAM_CONFIG_JSON, config.toJson())
             }
+            putExtra(ExamConfig.EXTRA_PROCTOR_PIN, proctorPin)
+            putExtra(ExamConfig.EXTRA_EXIT_PIN, exitPin)
         }
         startActivity(intent)
     }

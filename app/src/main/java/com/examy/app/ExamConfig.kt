@@ -12,9 +12,9 @@ import kotlin.random.Random
 data class ExamConfig(
     val subjectName: String = "",
     val examUrl: String = "",
-    val studentPin: String = "",
-    val proctorPin: String = "1234",
-    val exitPin: String = "1234",
+    val studentPin: String = "123456",
+    val proctorPin: String = "9999",
+    val exitPin: String = "8888",
     val startDate: String = "",
     val startTime: String = "",
     val endDate: String = "",
@@ -69,6 +69,11 @@ data class ExamConfig(
     }
 
     companion object {
+        private const val serialVersionUID: Long = 1L
+        const val EXTRA_EXAM_CONFIG_JSON = "extra_exam_config_json"
+        const val EXTRA_PROCTOR_PIN = "extra_proctor_pin"
+        const val EXTRA_EXIT_PIN = "extra_exit_pin"
+
         private const val TOKEN_PREFIX = "EXAMY:"
 
         fun generateRandomToken(): String {
@@ -82,9 +87,9 @@ data class ExamConfig(
                 ExamConfig(
                     subjectName = obj.optString("subject", ""),
                     examUrl = obj.optString("url", ""),
-                    studentPin = obj.optString("student_pin", ""),
-                    proctorPin = obj.optString("proctor_pin", "1234"),
-                    exitPin = obj.optString("exit_pin", "1234"),
+                    studentPin = obj.optString("student_pin", "123456"),
+                    proctorPin = obj.optString("proctor_pin", "9999"),
+                    exitPin = obj.optString("exit_pin", "8888"),
                     startDate = obj.optString("start_date", ""),
                     startTime = obj.optString("start_time", ""),
                     endDate = obj.optString("end_date", ""),
@@ -111,6 +116,17 @@ data class ExamConfig(
                 }
             } else if (trimmed.startsWith("{") && trimmed.endsWith("}")) {
                 return fromJson(trimmed)
+            } else {
+                // Try decoding as bare Base64 if applicable
+                try {
+                    val decodedBytes = Base64.decode(trimmed, Base64.NO_WRAP)
+                    val jsonStr = String(decodedBytes, StandardCharsets.UTF_8)
+                    if (jsonStr.startsWith("{") && jsonStr.endsWith("}")) {
+                        return fromJson(jsonStr)
+                    }
+                } catch (_: Exception) {
+                    // Not valid base64, ignore
+                }
             }
             return null
         }

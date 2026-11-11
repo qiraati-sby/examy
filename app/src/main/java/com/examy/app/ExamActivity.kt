@@ -49,12 +49,40 @@ class ExamActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         examUrl = intent.getStringExtra(EXTRA_EXAM_URL) ?: ""
-        examConfig = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getSerializableExtra(EXTRA_EXAM_CONFIG, ExamConfig::class.java)
-        } else {
-            @Suppress("DEPRECATION")
-            intent.getSerializableExtra(EXTRA_EXAM_CONFIG) as? ExamConfig
-        } ?: SecurityManager.getActiveExamConfig(this)
+
+        // Multi-layer retrieval for ExamConfig (JSON string takes precedence to avoid serialization quirks)
+        val jsonExtra = intent.getStringExtra(ExamConfig.EXTRA_EXAM_CONFIG_JSON)
+        val parsedConfigFromJson = if (!jsonExtra.isNullOrBlank()) ExamConfig.fromJson(jsonExtra) else null
+
+        val parsedConfigFromSerial = try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                intent.getSerializableExtra(EXTRA_EXAM_CONFIG, ExamConfig::class.java)
+            } else {
+                @Suppress("DEPRECATION")
+                intent.getSerializableExtra(EXTRA_EXAM_CONFIG) as? ExamConfig
+            }
+        } catch (_: Exception) {
+            null
+        }
+
+        examConfig = parsedConfigFromJson
+            ?: parsedConfigFromSerial
+            ?: SecurityManager.getActiveExamConfig(this)
+
+        // Ensure PINs and session config are persisted locally
+        examConfig?.let {
+            SecurityManager.saveActiveExamConfig(this, it)
+        }
+
+        val directProctorPin = intent.getStringExtra(ExamConfig.EXTRA_PROCTOR_PIN)
+        if (!directProctorPin.isNullOrBlank()) {
+            SecurityManager.setProctorPin(this, directProctorPin)
+        }
+
+        val directExitPin = intent.getStringExtra(ExamConfig.EXTRA_EXIT_PIN)
+        if (!directExitPin.isNullOrBlank()) {
+            SecurityManager.setExitPin(this, directExitPin)
+        }
 
         if (examUrl.isBlank()) {
             examUrl = examConfig?.examUrl ?: ""
@@ -269,17 +297,18 @@ class ExamActivity : AppCompatActivity() {
     }
 
     /**
-     * Handles proctor entering the Proctor PIN to silence siren and unlock exam.
+     * Handles proctor entering the Proctor PIN (or Exit PIN) to silence siren and unlock exam.
      */
     private fun handleProctorViolationUnlock() {
         val inputPin = binding.etProctorViolationPin.text.toString().trim()
-        if (SecurityManager.verifyProctorPin(this, inputPin, examConfig)) {
-            // Correct Proctor PIN
+        if (SecurityManager.verifyProctorPin(this, inputPin, examConfig) ||
+            SecurityManager.verifyExitPin(this, inputPin, examConfig)) {
+            // Correct Proctor or Exit PIN: silence alarm and unlock
             AlarmSoundManager.stopAlarm()
             isViolationActive = false
             binding.overlayViolationLocked.visibility = View.GONE
             SecurityManager.applyImmersiveFullscreen(this)
-            Toast.makeText(this, "Alarm dimatikan. Sesi ujian dibuka kembali oleh pengawas.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Alarm dimatikan. Kunci ujian berhasil dibuka oleh pengawas.", Toast.LENGTH_SHORT).show()
         } else {
             // Incorrect PIN: Siren continues playing
             binding.tvViolationPinError.visibility = View.VISIBLE
@@ -298,7 +327,7 @@ class ExamActivity : AppCompatActivity() {
         val btnCancel = dialogView.findViewById<Button>(R.id.btnCancelExit)
         val btnConfirm = dialogView.findViewById<Button>(R.id.btnConfirmExit)
 
-        tvDesc.text = "Masukkan PIN Keluar untuk mengakhiri sesi ujian:"
+        tvDesc.text = "Masukkan PIN Keluar atau PIN Pengawas untuk mengakhiri sesi ujian:"
         etPin.hint = "PIN Keluar"
 
         val dialog = AlertDialog.Builder(this)
@@ -320,7 +349,7 @@ class ExamActivity : AppCompatActivity() {
                 Toast.makeText(this, "Sesi ujian berakhir dengan aman.", Toast.LENGTH_SHORT).show()
                 finish()
             } else {
-                tvError.text = "PIN Keluar salah! Masukkan PIN dari pengawas."
+                tvError.text = "PIN salah! Masukkan PIN Keluar atau PIN Pengawas."
                 tvError.visibility = View.VISIBLE
                 etPin.text.clear()
             }
