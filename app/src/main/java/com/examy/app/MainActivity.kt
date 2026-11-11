@@ -41,6 +41,9 @@ class MainActivity : AppCompatActivity() {
         setupUI()
         applyTheme(SecurityManager.getAppTheme(this))
         updateVolumeIndicator()
+
+        // Check for updates automatically in the background
+        UpdateManager.checkForUpdate(this, isManualCheck = false)
     }
 
     override fun onResume() {
@@ -106,6 +109,13 @@ class MainActivity : AppCompatActivity() {
                 }
                 .setNegativeButton("Batal", null)
                 .show()
+        }
+
+        // Version Label & Manual Update Checker
+        val appVer = UpdateManager.getAppVersionName(this)
+        binding.tvAppVersionLabel.text = "Versi 3 (v$appVer) • Cek Pembaruan"
+        binding.tvAppVersionLabel.setOnClickListener {
+            UpdateManager.checkForUpdate(this, isManualCheck = true)
         }
     }
 

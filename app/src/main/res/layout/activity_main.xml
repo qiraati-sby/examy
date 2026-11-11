@@ -302,12 +302,19 @@
                         android:background="#DC2626" />
                 </LinearLayout>
 
-                <!-- Version Label (Matching Version 2.5 in reference) -->
+                <!-- Version Label & Update Checker -->
                 <TextView
+                    android:id="@+id/tvAppVersionLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:text="Versi 3"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingStart="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="8dp"
+                    android:paddingBottom="4dp"
+                    android:text="Versi 3 (v1.0.2) • Cek Pembaruan"
                     android:textColor="@color/text_muted"
                     android:textSize="10sp" />
             </LinearLayout>
