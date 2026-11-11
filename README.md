@@ -19,7 +19,7 @@ Anda dapat mengunduh file `.apk` resmi langsung ke HP Android tanpa perlu mengek
 
 | Versi | Status | Link Unduh Langsung | Catatan Utama |
 | :--- | :--- | :--- | :--- |
-| **Versi 3 (v1.0.2)** | 🟢 **Terbaru / Rekomendasi** | 📲 **[Unduh Examy-v3.apk](https://github.com/qiraati-sby/examy/releases/download/v1.0.2/Examy-v3.apk)** | **Operator Santri Edition**: Jadwal tanggal &amp; jam terpadu, riwayat sesi ujian otomatis, label menu lengkap, bebas redundansi. |
+| **Versi 3 (v1.0.2)** | 🟢 **Terbaru / Rekomendasi** | 📲 **[Unduh Examy-v3.apk](https://github.com/qiraati-sby/examy/releases/download/v1.0.2/Examy-v3.apk)** | **Operator Santri Edition**: Sistem PIN multi-lapis anti-gagal, in-app auto-update checker &amp; installer, jadwal tanggal &amp; jam terpadu, dan riwayat ujian otomatis. |
 | **Versi 2 (v1.0.1)** | 🟡 Stabil Sebelumnya | 📲 **[Unduh Examy-v2.apk](https://github.com/qiraati-sby/examy/releases/download/v1.0.1/Examy-v2.apk)** | Ditambahkan Menu Guru (Exam Creator), 3 Lapis PIN, Syarat Volume 80%, dan Alarm Sirene Pelanggaran. |
 | **Versi 1 (v1.0.0)** | ⚪ Rilis Dasar (Legacy) | 📲 **[Unduh Examy-v1.apk](https://github.com/qiraati-sby/examy/releases/download/v1.0.0/Examy-v1.apk)** | Versi awal: Kiosk dasar, input URL manual, dan pencegahan tangkapan layar. |
 
@@ -45,6 +45,7 @@ Anda dapat mengunduh file `.apk` resmi langsung ke HP Android tanpa perlu mengek
 | **Label Teks Lengkap Seluruh Menu &amp; Tombol** | ❌ | Parsial | ✅ |
 | **Pilihan Tema Warna (Theme Switcher)** | ❌ | ❌ | ✅ |
 | **Identitas Resmi "Operator Santri"** | ❌ | ❌ | ✅ |
+| **Pengecek &amp; Pemasang Pembaruan Otomatis (Auto-Update)** | ❌ | ❌ | ✅ |
 
 ---
 
